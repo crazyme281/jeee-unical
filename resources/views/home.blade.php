@@ -8,6 +8,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container hero-inner">
+      <img class="hero-logo" src="{{ asset('img/home-logo.jpg') }}" alt="JETSI logo" width="200" height="200">
       <h1>Journal of Engineering Technology<br>and Sustainable Innovation</h1>
       <p class="tagline">High-quality scholarly research on sustainable engineering, renewable energy and emerging technology.</p>
 

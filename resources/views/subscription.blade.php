@@ -1,130 +1,105 @@
-@extends('layouts.base')
+@extends('layouts.jetsi')
 
 @section('title', 'Subscription')
-@section('subscription.active', 'active')
+@section('nav', 'subscribe')
 
 @section('content')
-    <section class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="title">
-                        <h3>
-                            Subscription
-                        </h3>
-                    </div>
+  <section class="page-head">
+    <div class="container">
+      <h1>Subscription</h1>
+    </div>
+  </section>
 
-                    <p>
-                    Subscription to the journals including postage is as follows:
-
-Foreign institutions USD100 per issue
-
-Local institutions NGN10,000 per issue
-
-Individual subscribers USD50 or NGN7000.00. per issue.
-
-All journals can be ordered through this Global Journal website.
-
-The prices of the books published by Bachudo Science Co. Ltd are as listed under products. Orders can also be placed in this website.
-                    </p>
-                    <p>
-                        
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="subscribe col-md-8">
-                    @auth
-                    @if(Auth::user()->subscribedToCurrentVolume())
-                        <p class="text-info">
-                            <h5>NOTE: You have an active subscription for the current volume ({{ $volumes->last()->year }}).</h5>
-                        </p>
-                        {{--<button class="btn btn-danger hide" type="button" id="cancel-button"> Cancel AutoSubscription </button>--}}
-                    @endif
-
-                    <p>
-                        <a href="{{ route('subscriptions') }}">Click here</a> to view all your subscriptions.
-                    </p>
-                    <form id="payment">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group label-floating is-empty">
-                                    <label for="sel1">Choose Volume:</label>
-                                    <select name="volume" class="form-control" id="sel1">
-                                        @foreach($volumes as $volume)
-                                            <option value="{{ $volume->volume }}">Volume {{ $volume->volume }} ({{ $volume->year }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group label-floating is-empty">
-                                    <label for="sel1">Select Issue:</label>
-                                    <select name="issue" class="form-control" id="sel1">
-                                        <option value="0">All Issues</option>
-                                        <option value="1">Issue 1</option>
-                                        <option value="2">Issue 2</option>
-                                        <option value="3">Issue 3</option>
-                                        <option value="4">Issue 4</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 text-center">
-                                <button id="pay" type="submit" class="btn btn-primary btn-raised">
-                                    Proceed to Payment
-                                    <div class="ripple-container"></div>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    @else
-                        <a class="btn btn-secondary" href="{{ route('sub') }}">Login to Subscribe</a>
-                    @endauth
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-8">
-                    <p>
-                        LOCAL AUTHORS
-                    </p>
-                    <p>
-                        Payment can be made into the following Global Journal Account:
-                    </p>
-                    <p>
-                        Account Name: Global Journal of Pure and Applied Sciences
-                    </p>
-                    <p>
-                        Account Number: 2000551087
-                    </p>
-                    <p>
-                        Bank: First Bank of Nigeria Calabar
-                    </p>
-                    <br>
-                    <p>
-                        FOREIGN AUTHORS, <BR></BR>Payment should be made as money transfer to the account below:
-                    </p>
-                    <p>
-                        Account Name: Global Journal of Pure and Applied Sciences
-                    </p>
-                    <p>
-                        Account No: 2006009432 ( First Bank of Nigeria Plc, Calabar Road Branch, Calabar, Nigeria.)
-                    </p>
-                    <p>
-                        Swift Code: SCBLUS33 OR FBNINGLA
-                    </p>
-                    <p>
-                        Sort Code: 011071206
-                    </p>
-                </div>
-            </div>
+  <main id="main" class="subscription-page section">
+    <div class="container">
+      <section class="subscription-pricing">
+        <div class="section-head">
+          <h2>Subscription to the journals including postage is as follows:</h2>
         </div>
-    </section>
+        <div class="rate-grid">
+          <article class="rate-card card">
+            <span class="material-icons" aria-hidden="true">apartment</span>
+            <p class="rate-amount">Foreign institutions<br>USD100 per issue</p>
+          </article>
+          <article class="rate-card card">
+            <span class="material-icons" aria-hidden="true">location_city</span>
+            <p class="rate-amount">Local institutions<br>NGN10,000 per issue</p>
+          </article>
+          <article class="rate-card card">
+            <span class="material-icons" aria-hidden="true">person</span>
+            <p class="rate-amount">Individual subscribers<br>USD50 or NGN7000.00. per issue.</p>
+          </article>
+        </div>
+        <div class="subscription-note">
+          <p>All journals can be ordered through this Global Journal website.</p>
+          <p>The prices of the books published by Bachudo Science Co. Ltd are as listed under products. Orders can also be placed in this website.</p>
+        </div>
+      </section>
+
+      <section class="payment-panel card">
+        @auth
+          @if(Auth::user()->subscribedToCurrentVolume())
+            <p class="subscription-status"><span class="material-icons" aria-hidden="true">check_circle</span>NOTE: You have an active subscription for the current volume ({{ $volumes->last()->year }}).</p>
+          @endif
+
+          <p class="meta"><a href="{{ route('subscriptions') }}">Click here</a> to view all your subscriptions.</p>
+          <form id="payment" class="subscription-form">
+            <div class="field">
+              <label for="subscription-volume">Choose Volume:</label>
+              <select name="volume" id="subscription-volume">
+                @foreach($volumes as $volume)
+                  <option value="{{ $volume->volume }}">Volume {{ $volume->volume }} ({{ $volume->year }})</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="field">
+              <label for="subscription-issue">Select Issue:</label>
+              <select name="issue" id="subscription-issue">
+                <option value="0">All Issues</option>
+                <option value="1">Issue 1</option>
+                <option value="2">Issue 2</option>
+                <option value="3">Issue 3</option>
+                <option value="4">Issue 4</option>
+              </select>
+            </div>
+            <button id="pay" type="submit" class="btn btn-primary">Proceed to Payment</button>
+          </form>
+          {{--<button class="btn btn-danger hide" type="button" id="cancel-button">Cancel AutoSubscription</button>--}}
+        @else
+          <a class="btn btn-primary" href="{{ route('sub') }}">Login to Subscribe</a>
+        @endauth
+      </section>
+
+      <section class="bank-payment">
+        <div class="bank-grid">
+          <article class="bank-card card">
+            <h3>LOCAL AUTHORS</h3>
+            <p>Payment can be made into the following Global Journal Account:</p>
+            <dl>
+              <div><dt>Account Name:</dt><dd>Global Journal of Pure and Applied Sciences</dd></div>
+              <div><dt>Account Number:</dt><dd>2000551087</dd></div>
+              <div><dt>Bank:</dt><dd>First Bank of Nigeria Calabar</dd></div>
+            </dl>
+          </article>
+          <article class="bank-card card">
+            <h3>FOREIGN AUTHORS</h3>
+            <p>Payment should be made as money transfer to the account below:</p>
+            <dl>
+              <div><dt>Account Name:</dt><dd>Global Journal of Pure and Applied Sciences</dd></div>
+              <div><dt>Account No:</dt><dd>2006009432 ( First Bank of Nigeria Plc, Calabar Road Branch, Calabar, Nigeria.)</dd></div>
+              <div><dt>Swift Code:</dt><dd>SCBLUS33 OR FBNINGLA</dd></div>
+              <div><dt>Sort Code:</dt><dd>011071206</dd></div>
+            </dl>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
 @endsection
 @section('scripts')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('js/front.js') }}"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     @auth
     <script>

@@ -1,10 +1,17 @@
-@extends('layouts.base')
+@extends('layouts.jetsi')
 
 @section('title', 'Submission Guideline')
-@section('guideline.active', 'active')
 
 @section('content')
-    <div class="section">
+  <section class="page-head">
+    <div class="container">
+      <h1>INSTRUCTIONS FOR CONTRIBUTORS TO GLOBAL JOURNAL SERIES AND BACHUDO PUBLISHERS</h1>
+    </div>
+  </section>
+
+  <main id="main" class="guideline-page">
+    @if(isset($current_issue))
+    <div class="section guideline-ad">
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
@@ -13,16 +20,11 @@
             </div>
         </div>
     </div>
+    @endif
 
-    <section class="section">
+    <section class="section guideline-section">
         <div class="container">
             <div class="col-md-8">
-                <div class="title">
-                    <h3>
-                    INSTRUCTIONS FOR CONTRIBUTORS TO GLOBAL JOURNAL SERIES AND BACHUDO PUBLISHERS
-                    </h3>
-                </div>
-
                 <p>
                 
 
@@ -39,7 +41,7 @@ Global Journal Series Publishes original contributions in the areas indicated (n
         </div>
     </section>
 
-    <section class="section">
+    <section class="section guideline-section">
         <div class="container">
             <div class="col-md-8">
                 <div class="title">
@@ -60,7 +62,7 @@ Global Journal of Geological Sciences
         </div>
     </section>
 
-    <section class="section">
+    <section class="section guideline-section">
         <div class="container">
             <div class="col-md-8">
                 <div class="title">
@@ -79,7 +81,7 @@ The first page should include a title, the name(s) of the authors(s) and their a
         </div>
     </section>
 
-    <section class="section">
+    <section class="section guideline-section">
         <div class="container">
             <div class="col-md-8">
                 <div class="title">
@@ -195,7 +197,8 @@ t be numbered in the text and when listing them.
         </div>
     </section>
 
-    <div class="section">
+    @if(isset($current_issue))
+    <div class="section guideline-ad">
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
@@ -204,4 +207,6 @@ t be numbered in the text and when listing them.
             </div>
         </div>
     </div>
+    @endif
+  </main>
 @endsection

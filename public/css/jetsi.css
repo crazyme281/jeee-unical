@@ -16,7 +16,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overscroll-behavior-y: none; }
 body { margin: 0; font-family: Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.55; }
 img { max-width: 100%; height: auto; }
 a { color: var(--magenta); text-decoration: none; }
@@ -59,6 +59,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Hero */
 .hero { position: relative; color: #fff; padding: 72px 0 64px;
   background: linear-gradient(180deg, rgba(11, 16, 32, .78), rgba(11, 16, 32, .88)), url("../img/engineering1.jpeg") center/cover no-repeat, var(--hero-dark); }
+.hero-logo { display: block; width: clamp(120px, 20vw, 200px); height: auto; margin: 0 auto 24px; object-fit: contain; }
 .hero h1 { font-size: clamp(28px, 4.5vw, 46px); font-weight: 700; text-align: center; margin-bottom: 14px; }
 .tagline { text-align: center; font-size: 18px; max-width: 700px; margin: 0 auto 32px; opacity: .92; }
 
@@ -142,6 +143,56 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Inner pages: page title band */
 .page-head { background: var(--hero-dark); color: #fff; padding: 36px 0; }
 .page-head h1 { font-size: 34px; font-weight: 400; margin: 0; }
+.page-head .eyebrow { color: #f0a8d7; }
+.page-intro { max-width: 680px; margin: 12px 0 0; color: #d7dbe5; font-size: 16px; }
+
+/* Contact, subscription and submission pages */
+.contact-page, .subscription-page { background: var(--bg-alt); }
+.contact-intro { display: flex; align-items: flex-start; gap: 20px; padding: 28px 32px; margin-bottom: 24px; }
+.contact-intro h2, .contact-card h2 { font-size: 20px; font-weight: 500; margin-bottom: 10px; }
+.contact-intro p:last-child, .contact-card p:last-of-type { margin-bottom: 0; }
+.contact-icon { flex: 0 0 48px; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: #f7eaf3; color: var(--magenta); font-size: 24px; }
+.contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.contact-card { padding: 24px; }
+.contact-card .eyebrow { margin-bottom: 8px; }
+.contact-role { color: var(--muted); }
+.contact-emails { margin-top: 12px; }
+.contact-emails li { margin-top: 6px; }
+.contact-publisher { grid-column: 1 / -1; }
+
+.subscription-pricing, .bank-payment { margin-bottom: 40px; }
+.rate-grid, .bank-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.rate-card { padding: 24px; }
+.rate-card > .material-icons { color: var(--magenta); font-size: 28px; margin-bottom: 16px; }
+.rate-card h3, .bank-card h3 { font-size: 17px; font-weight: 500; margin-bottom: 12px; }
+.rate-amount { font-size: 23px; font-weight: 700; color: var(--ink); margin: 0; }
+.rate-amount span { display: block; margin-top: 4px; font-size: 14px; font-weight: 400; color: var(--muted); }
+.subscription-note { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.payment-panel { padding: 28px; margin-bottom: 40px; border-top: 4px solid var(--magenta); }
+.subscription-status { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: #e8f5ee; color: #14532d; border-radius: 4px; margin-bottom: 16px; }
+.subscription-status .material-icons { font-size: 20px; }
+.subscription-form { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 16px; margin-top: 20px; }
+.subscription-form .field label { color: var(--muted); }
+.subscription-form select { width: 100%; padding: 10px 12px; min-height: 42px; border: 1px solid #c9ccd4; border-radius: 4px; background: #fff; color: var(--ink); font: 16px Roboto, Arial, sans-serif; }
+.subscription-form .btn { min-height: 42px; justify-content: center; white-space: nowrap; }
+.payment-login-note { color: var(--muted); }
+.bank-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bank-card { padding: 24px; }
+.bank-card .eyebrow { margin-bottom: 8px; }
+.bank-card dl { margin: 18px 0 0; }
+.bank-card dl > div { display: grid; grid-template-columns: 125px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.bank-card dt { color: var(--muted); font-size: 14px; font-weight: 500; }
+.bank-card dd { margin: 0; font-size: 14px; }
+
+.guideline-page { background: var(--bg-alt); }
+.guideline-section .col-md-8 { max-width: 860px; margin: 0 auto; padding: 30px 34px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.guideline-section .title h3 { color: var(--ink); font-size: 21px; font-weight: 500; margin: 0 0 18px; }
+.guideline-section .col-md-8 p { color: #42495a; font-size: 15px; line-height: 1.75; margin-bottom: 16px; }
+.guideline-section .col-md-8 h4 { color: var(--magenta-dark); font-size: 17px; font-weight: 500; margin: 18px 0 8px; }
+.guideline-ad { padding-top: 32px; padding-bottom: 0; }
+.guideline-ad .col-md-8 { max-width: 860px; margin: 0 auto; padding: 26px 30px; background: #f7eaf3; border: 1px solid #ead2e2; border-radius: var(--radius); text-align: center; }
+.guideline-ad h2 { font-size: 22px; font-weight: 500; }
+.guideline-ad h4 { color: var(--muted); font-size: 15px; font-weight: 400; margin: 8px 0 16px; }
 
 /* Long-form page: sticky "On this page" sidebar + readable content column */
 .page-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: start; padding-top: 40px; padding-bottom: 56px; }
@@ -170,6 +221,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .search-card .btn { grid-column: 1 / -1; justify-content: center; }
   .aims-inner { flex-direction: column; align-items: flex-start; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .rate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-brand { grid-column: 1 / -1; }
   .nav-toggle { display: block; }
   .main-nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--magenta-dark); }
@@ -183,6 +235,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 @media (max-width: 560px) {
   .search-card, .newsletter-form { grid-template-columns: 1fr; }
+  .contact-grid, .rate-grid, .bank-grid, .subscription-form { grid-template-columns: 1fr; }
+  .contact-intro { padding: 22px; flex-direction: column; }
+  .contact-card, .rate-card, .bank-card, .payment-panel { padding: 22px; }
+  .subscription-form .btn { width: 100%; }
+  .bank-card dl > div { grid-template-columns: 1fr; gap: 2px; }
+  .guideline-section .col-md-8, .guideline-ad .col-md-8 { padding: 22px; }
   .current-issue { padding: 20px; }
   .current-body { flex-direction: column; align-items: flex-start; }
   .issue-grid { grid-template-columns: 1fr; }
