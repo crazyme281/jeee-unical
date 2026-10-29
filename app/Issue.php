@@ -1,67 +1,63 @@
 <?php
+$page_title = 'Issues | JETSI';
+$current_nav = 'issues';
 
-namespace App;
+// Retrieve published issues from the existing Laravel model.
+$issues = \App\Issue::latest()->get();
+?>
 
-use Backpack\CRUD\CrudTrait;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use Illuminate\Database\Eloquent\Model;
+<div class="page-head">
+    <div class="container">
+        <h1>Issues</h1>
+    </div>
+</div>
 
-class Issue extends Model
-{
-    use CrudTrait;
-    use Sluggable;
-    use SluggableScopeHelpers;
+<main id="main">
+    <section class="section">
+        <div class="container">
 
-    protected $guarded = ['id'];
+            @if ($issues->isEmpty())
+                <p class="meta">No issues have been published yet.</p>
+            @else
+                <div class="issue-grid">
+                    @foreach ($issues as $issue)
+                        <article class="issue card">
+                            <div class="cover" aria-hidden="true">
+                                <span>
+                                    Vol {{ e($issue->volume ?? '') }}<br>
+                                    No {{ e($issue->number ?? '') }}
+                                </span>
+                            </div>
 
-    public function articles() {
-        return $this->hasMany(Article::class);
-    }
+                            <div>
+                                <h3>
+                                    <a href="{{ url('issue/' . $issue->slug) }}">
+                                        {{ e($issue->title) }}
+                                    </a>
+                                </h3>
 
-    public function scopeCurrent($query) {
-        return $query->where('issues.status', 'Current')->orderBy('issues.created_at', 'desc');
-    }
+                                <p class="meta">
+                                    Volume {{ e($issue->volume ?? '') }}
+                                    &middot;
+                                    Issue {{ e($issue->number ?? '') }}
+                                </p>
 
-    public function scopeLatest($query) {
-        return $query->where('status', 'Published')->orderBy('issues.year', 'desc')->orderBy('number', 'desc');
-    }
+                                <p class="meta">
+                                    Page Nos. {{ e($issue->pages ?? 'N/A') }}
+                                </p>
 
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => ['title']
-            ]
-        ];
-    }
+                                <p class="meta">
+                                    Online since
+                                    {{ $issue->created_at
+                                        ? $issue->created_at->format('M j, Y')
+                                        : 'N/A' }}
+                                </p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            @endif
 
-    public function setImageAttribute($value)
-    {
-        $attribute_name = "image";
-        $disk = "public";
-        $destination_path = "issues";
-
-        // if the image was erased
-        if ($value==null) {
-            // delete the image from disk
-            \Storage::disk($disk)->delete($this->{$attribute_name});
-
-            // set null in the database column
-            $this->attributes[$attribute_name] = null;
-        }
-
-        // if a base64 was sent, store it in the db
-        if (starts_with($value, 'data:image'))
-        {
-            // 0. Make the image
-            $image = \Image::make($value);
-            // 1. Generate a filename.
-            $filename = md5($value.time()).'.jpg';
-            // 2. Store the image on disk.
-            \Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
-            // 3. Save the path to the database
-            $this->attributes[$attribute_name] = $destination_path.'/'.$filename;
-        }
-    }
-}
+        </div>
+    </section>
+</main>
