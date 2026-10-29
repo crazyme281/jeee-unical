@@ -27,6 +27,17 @@ class Issue extends Model
         return $query->where('status', 'Published')->orderBy('issues.year', 'desc')->orderBy('number', 'desc');
     }
 
+    /**
+     * Every issue that should appear in public listings (Current or Published),
+     * newest first. `number` is stored as text, so it is cast to an integer
+     * to make sure "10" sorts after "2".
+     */
+    public function scopeListed($query) {
+        return $query->whereIn('issues.status', ['Current', 'Published'])
+                     ->orderBy('issues.year', 'desc')
+                     ->orderByRaw('CAST(issues.number AS integer) desc');
+    }
+
     public function sluggable()
     {
         return [

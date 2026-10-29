@@ -31,8 +31,8 @@ class HomeController extends Controller
     {
         // Current Issue
         $current_issue = Issue::current()->first();
-        // Get Latest Published Issues
-        $recent_issues = Issue::latest()->take(4)->get();
+        // Get Latest Issues (Current or Published)
+        $recent_issues = Issue::listed()->take(4)->get();
         // Get Popular Articles
         $popular_articles = Article::popular()->with('issue')->take(4)->get();
 
@@ -52,7 +52,7 @@ class HomeController extends Controller
 
     public function subscription()
     {
-        $volumes = Issue::latest()->get()->unique('volume');
+        $volumes = Issue::listed()->get()->unique('volume');
         return view('subscription')->with(['volumes' => $volumes]);
     }
 
