@@ -16,7 +16,7 @@ class IssueController extends Controller
 
     public function index()
     {
-        $issues = $this->issue->latest()->get();
+        $issues = $this->issue->listed()->get();
         return view('issues.index', ['issues' => $issues]);
     }
 
