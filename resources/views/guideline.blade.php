@@ -10,21 +10,14 @@
   </section>
 
   <main id="main" class="guideline-page">
-    @if(isset($current_issue))
-    <div class="section guideline-ad">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    @include('partials.issue_advert', ['issue' => $current_issue])
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
     <section class="section guideline-section">
         <div class="container">
             <div class="col-md-8">
+                <div class="title">
+                    <h3>
+                        INSTRUCTIONS FOR CONTRIBUTORS TO GLOBAL JOURNAL SERIES AND BACHUDO PUBLISHERS
+                    </h3>
+                </div>
                 <p>
                 
 
@@ -197,16 +190,5 @@ t be numbered in the text and when listing them.
         </div>
     </section>
 
-    @if(isset($current_issue))
-    <div class="section guideline-ad">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    @include('partials.issue_advert', ['issue' => $current_issue])
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
   </main>
 @endsection

@@ -59,7 +59,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Hero */
 .hero { position: relative; color: #fff; padding: 72px 0 64px;
   background: linear-gradient(180deg, rgba(11, 16, 32, .78), rgba(11, 16, 32, .88)), url("../img/engineering1.jpeg") center/cover no-repeat, var(--hero-dark); }
-.hero-logo { display: block; width: clamp(120px, 20vw, 200px); height: auto; margin: 0 auto 24px; object-fit: contain; }
+.hero-logos { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 24px; }
+.hero-logo { display: block; width: clamp(100px, 16vw, 160px); height: auto; margin: 0; object-fit: contain; }
 .hero h1 { font-size: clamp(28px, 4.5vw, 46px); font-weight: 700; text-align: center; margin-bottom: 14px; }
 .tagline { text-align: center; font-size: 18px; max-width: 700px; margin: 0 auto 32px; opacity: .92; }
 
