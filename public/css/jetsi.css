@@ -353,5 +353,5 @@ select:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 /* Author guidelines downloads */
 .guideline-downloads { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; margin: 8px 0 0; padding: 0; }
 .guideline-downloads .btn { display: inline-flex; align-items: center; gap: 6px; }
-.guideline-downloads .btn-outline { border-color: var(--magenta-dark); color: var(--magenta-dark); }
-.guideline-downloads .btn-outline:hover { background: rgba(0, 0, 0, .05); }
+.guideline-downloads .btn-primary { background: var(--magenta); }
+.guideline-downloads .btn-primary:hover { background: var(--magenta-dark); }

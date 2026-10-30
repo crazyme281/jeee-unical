@@ -30,9 +30,10 @@ $sections = [
           <p>The Journal of Engineering Technology and Sustainable Innovation (JETSI) publishes high-quality peer-reviewed articles spanning engineering, technology, and sustainability sciences. Manuscripts are considered as research papers, review articles, technical notes, or case studies that advance innovation, sustainable development, and technological progress.</p>
 
           <h4>Downloads</h4>
+          <p>Download a template to get started</p>
           <ul class="guideline-downloads">
-            <li><a class="btn btn-outline" href="{{ asset('downloads/JETSI_Template.docx') }}" download><span class="material-icons" aria-hidden="true">description</span> JETSI manuscript template</a></li>
-            <li><a class="btn btn-outline" href="{{ asset('downloads/JETSI_Cover_Page.docx') }}" download><span class="material-icons" aria-hidden="true">description</span> JETSI cover page</a></li>
+            <li><a class="btn btn-primary" href="{{ asset('downloads/JETSI_Template.docx') }}" download><span class="material-icons" aria-hidden="true">download</span> Manuscript</a></li>
+            <li><a class="btn btn-primary" href="{{ asset('downloads/JETSI_Cover_Page.docx') }}" download><span class="material-icons" aria-hidden="true">download</span> Cover Page</a></li>
           </ul>
         </div>
       </div>
