@@ -1,0 +1,35 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies / build output (rebuilt by Docker on Render)
+/vendor
+/node_modules
+
+# Laravel runtime data
+/bootstrap/cache/*.php
+/public/storage
+/public/hot
+/storage/logs/*
+!/storage/logs/.gitignore
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+# Uploaded manuscripts / issue covers: keep OUT of Git (private data; lives on the Render disk)
+/storage/app/public/*
+!/storage/app/public/.gitignore
+/storage/submissions
+/storage/issues
+
+# cPanel / OS / editor noise
+error_log
+**/error_log
+.DS_Store
+.idea/
+.vscode/
+*.zip
+
+# Data that lives on the Render disk, not in Git
+/public/uploads

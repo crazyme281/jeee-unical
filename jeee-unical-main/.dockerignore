@@ -1,0 +1,55 @@
+# --- Secrets / environment (never bake into an image) ---
+.env
+.env.*
+!.env.example
+**/.env
+*.pem
+*.key
+*.crt
+
+# --- VCS / editor / OS ---
+.git
+.gitignore
+.gitattributes
+.idea
+.vscode
+**/.DS_Store
+
+# --- Regenerated inside the image ---
+vendor
+node_modules
+bootstrap/cache/*.php
+public/storage
+public/hot
+
+# --- Runtime data: lives on the Render disk / database, not in the image ---
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/testing/*
+storage/app/public/*
+storage/submissions
+storage/issues
+**/error_log
+
+# --- Leftovers from the previous cPanel host / unrelated folders ---
+journal-app
+njm
+stats
+cgi-bin
+error
+.htaccess
+.user.ini
+php.ini
+standard_index.html
+
+# --- Not needed at runtime ---
+tests
+phpunit.xml
+*.zip
+RENDER_DEPLOYMENT.md
+render.yaml
+Dockerfile
+.dockerignore
+public/uploads

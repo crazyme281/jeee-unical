@@ -1,0 +1,95 @@
+# Render Blueprint for jeee_unical (Laravel 5.5 / PHP 7.3 / Supabase Postgres).
+# The database is EXTERNAL (Supabase). Use the SESSION POOLER details from Supabase > Connect
+# (port 5432, user postgres.<project-ref>). Do not use port 6543 (transaction mode breaks Laravel).
+# See SUPABASE_SETUP.md.
+services:
+  - type: web
+    name: jeee-unical
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    # Persistent disks need a paid instance type (free instances cannot attach one),
+    # and a service with a disk runs as a single instance.
+    plan: starter
+    # Pick the region closest to your MySQL host and your readers.
+    region: frankfurt
+    # Static file served by Apache: confirms the container is up and listening.
+    # (It does not exercise the database.)
+    healthCheckPath: /robots.txt
+    disk:
+      name: uploads
+      # Where Laravel stores uploaded manuscripts / issue covers (the "local" disk root
+      # in config/filesystems.php is storage/app/public).
+      mountPath: /var/www/html/storage/app/public
+      sizeGB: 5
+    envVars:
+      # --- Application ---
+      - key: APP_NAME
+        value: JETSI_APP
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false            # base64:... see RENDER_DEPLOYMENT.md (do NOT use generateValue)
+      - key: APP_URL
+        sync: false            # e.g. https://jeee-unical.onrender.com (or your custom domain)
+      - key: APP_LOG
+        value: errorlog        # logs go to the Render log stream, not a file on the ephemeral disk
+      - key: APP_LOG_LEVEL
+        value: error
+      # --- Database (Supabase Postgres, session pooler) ---
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_SSLMODE
+        value: require
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # --- Drivers (same as the current app; see notes on sessions in RENDER_DEPLOYMENT.md) ---
+      - key: SESSION_DRIVER
+        value: file
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: CACHE_DRIVER
+        value: file
+      - key: QUEUE_DRIVER
+        value: sync
+      - key: BROADCAST_DRIVER
+        value: log
+      # --- Mail (SMTP) ---
+      - key: MAIL_DRIVER
+        value: smtp
+      - key: MAIL_HOST
+        sync: false
+      - key: MAIL_PORT
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_ENCRYPTION
+        sync: false
+      # --- Third-party credentials ---
+      - key: GOOGLE_OAUTH_ID
+        sync: false
+      - key: GOOGLE_OAUTH_SECRET
+        sync: false
+      - key: PAYSTACK_PUBLIC
+        sync: false
+      - key: PAYSTACK_SECRET
+        sync: false
+      # --- Container behaviour (docker/start.sh) ---
+      # Fresh Supabase database: "true" creates the tables on first boot (only pending
+      # migrations run, nothing is dropped). Set back to "false" afterwards if you prefer.
+      - key: RUN_MIGRATIONS
+        value: "true"
+      - key: CACHE_CONFIG
+        value: "true"

@@ -1,0 +1,7 @@
+# Shell scripts and the Dockerfile must keep LF endings even when checked out on Windows,
+# otherwise the container fails with "/bin/sh^M: bad interpreter".
+*.sh        text eol=lf
+Dockerfile  text eol=lf
+*.conf      text eol=lf
+*.ini       text eol=lf
+render.yaml text eol=lf
