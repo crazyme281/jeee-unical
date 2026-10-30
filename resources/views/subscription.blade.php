@@ -30,10 +30,6 @@
             <p class="rate-amount">Individual subscribers<br>USD50 or NGN7000.00. per issue.</p>
           </article>
         </div>
-        <div class="subscription-note">
-          <p>All journals can be ordered through this Global Journal website.</p>
-          <p>The prices of the books published by Bachudo Science Co. Ltd are as listed under products. Orders can also be placed in this website.</p>
-        </div>
       </section>
 
       <section class="payment-panel card">
@@ -70,29 +66,6 @@
         @endauth
       </section>
 
-      <section class="bank-payment">
-        <div class="bank-grid">
-          <article class="bank-card card">
-            <h3>LOCAL AUTHORS</h3>
-            <p>Payment can be made into the following Global Journal Account:</p>
-            <dl>
-              <div><dt>Account Name:</dt><dd>Global Journal of Pure and Applied Sciences</dd></div>
-              <div><dt>Account Number:</dt><dd>2000551087</dd></div>
-              <div><dt>Bank:</dt><dd>First Bank of Nigeria Calabar</dd></div>
-            </dl>
-          </article>
-          <article class="bank-card card">
-            <h3>FOREIGN AUTHORS</h3>
-            <p>Payment should be made as money transfer to the account below:</p>
-            <dl>
-              <div><dt>Account Name:</dt><dd>Global Journal of Pure and Applied Sciences</dd></div>
-              <div><dt>Account No:</dt><dd>2006009432 ( First Bank of Nigeria Plc, Calabar Road Branch, Calabar, Nigeria.)</dd></div>
-              <div><dt>Swift Code:</dt><dd>SCBLUS33 OR FBNINGLA</dd></div>
-              <div><dt>Sort Code:</dt><dd>011071206</dd></div>
-            </dl>
-          </article>
-        </div>
-      </section>
     </div>
   </main>
 @endsection
