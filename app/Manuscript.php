@@ -24,12 +24,22 @@ class Manuscript extends Model
         return $this->hasMany(Author::class);
     }
 
+    public function editor() {
+        return $this->belongsTo(User::class, 'editor_id');
+    }
+
+    public function reviewer() {
+        return $this->belongsTo(User::class, 'reviewer_id');
+    }
+
     public function getStatusClassAttribute() {
         switch ($this->attributes['status']) {
             case 'Draft':
                 return 'default';
             case 'Review':
                 return 'info';
+            case 'Revision':
+                return 'warning';
             case 'Approved':
                 return 'success';
             case 'Rejected':

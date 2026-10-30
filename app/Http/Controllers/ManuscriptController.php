@@ -65,7 +65,7 @@ class ManuscriptController extends Controller
 
     public function edit($id){
         $user = Auth::user();
-        $manuscript = $user->manuscripts()->where('status', '=', 'Review')->find($id);
+        $manuscript = $user->manuscripts()->whereIn('status', ['Review', 'Revision'])->find($id);
 
         if(!isset($manuscript)){
             return redirect()->route('manuscripts.index');
@@ -83,7 +83,7 @@ class ManuscriptController extends Controller
         ]);
 
         $user = Auth::user();
-        $manuscript = $user->manuscripts()->where('status', '=', 'Review')->find($id);
+        $manuscript = $user->manuscripts()->whereIn('status', ['Review', 'Revision'])->find($id);
 
         if(!isset($manuscript)){
             return redirect()->route('manuscripts.index');

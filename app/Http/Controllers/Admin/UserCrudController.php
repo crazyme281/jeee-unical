@@ -53,6 +53,11 @@ class UserCrudController extends CrudController
                 'type' => 'checkbox',
                 'label' => 'Make Admin?'
             ],
+            [
+                'name' => 'reviewer',
+                'type' => 'checkbox',
+                'label' => 'Reviewer? (can be assigned manuscripts to review)'
+            ],
         ]);
         // $this->crud->addField($options, 'update/create/both');
         // $this->crud->addFields($array_of_arrays, 'update/create/both');
@@ -61,9 +66,10 @@ class UserCrudController extends CrudController
 
         // ------ CRUD COLUMNS
         $this->crud->addColumns([
-            'first_name', 'last_name', 'email', 'admin'
+            'first_name', 'last_name', 'email', 'admin', 'reviewer'
         ]);
         $this->crud->setColumnDetails('admin', ['type' => 'boolean']);
+        $this->crud->setColumnDetails('reviewer', ['type' => 'boolean']);
         // $this->crud->addColumn(); // add a single column, at the end of the stack
         // $this->crud->addColumns(); // add multiple columns, at the end of the stack
         // $this->crud->removeColumn('column_name'); // remove a column from the stack

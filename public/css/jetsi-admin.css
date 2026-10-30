@@ -136,7 +136,7 @@ body.jx-admin .main-footer { background: #fff; border-top: 1px solid var(--line)
 .jx-stat { display: flex; align-items: center; gap: 14px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; color: var(--ink) !important; text-decoration: none !important; transition: transform .15s, box-shadow .15s; }
 .jx-stat:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 24, 40, .12); }
 .jx-stat-icon { flex: none; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; }
-.jx-magenta { background: var(--magenta); } .jx-blue { background: var(--blue); } .jx-teal { background: #1b998b; } .jx-amber { background: #e0a100; } .jx-slate { background: #5d6475; }
+.jx-magenta { background: var(--magenta); } .jx-blue { background: var(--blue); } .jx-teal { background: #1b998b; } .jx-amber { background: #e0a100; } .jx-slate { background: #5d6475; } .jx-green { background: #1b8a5a; } .jx-red { background: #c0392b; } .jx-orange { background: #e8710a; } .jx-indigo { background: #4a56b5; }
 .jx-stat-num { display: block; font-size: 28px; font-weight: 700; line-height: 1.05; }
 .jx-stat-label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-top: 2px; }
 
@@ -151,10 +151,41 @@ body.jx-admin .main-footer { background: #fff; border-top: 1px solid var(--line)
 .jx-chip { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; background: #eceef2; color: #3b4254; }
 .jx-chip-submitted { background: #e3effa; color: #1f5f99; }
 .jx-chip-review { background: #fdf2d6; color: #8a6200; }
+.jx-chip-revision { background: #fde8d3; color: #a54a00; }
+.jx-chip-draft { background: #eceef2; color: #3b4254; }
 .jx-chip-approved { background: #dcf3e8; color: #17744a; }
 .jx-chip-rejected { background: #fbe3e0; color: #a93226; }
 .jx-empty { padding: 28px 18px; text-align: center; color: var(--muted); margin: 0; }
 .jx-table > tbody > tr > td, .jx-table > thead > tr > th { padding: 12px 16px; }
+
+/* Dashboard overview */
+.jx-stats-9 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.jx-grid-chart { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: stretch; margin-bottom: 20px; }
+.jx-grid-eq { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; margin-bottom: 20px; }
+.jx-grid-chart > .box, .jx-grid-eq > .box { margin-bottom: 0; min-width: 0; }
+.jx-chart { position: relative; height: 280px; }
+.jx-mini-stats { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #eef0f3; color: var(--muted); font-size: 13px; }
+.jx-mini-stats strong { color: var(--ink); font-size: 15px; }
+.jx-list { list-style: none; margin: 0; padding: 0; }
+.jx-list > li { display: flex; flex-direction: column; gap: 2px; padding: 12px 18px; border-bottom: 1px solid #eef0f3; }
+.jx-list > li:last-child { border-bottom: 0; }
+.jx-activity > li { flex-direction: row; align-items: center; gap: 12px; }
+.jx-activity > li > a { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jx-activity > li > .small { flex: none; }
+.jx-activity-icon { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #faf3f8; color: var(--magenta); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.jx-overdue { color: #a93226; font-weight: 500; }
+@media (max-width: 991px) {
+  .jx-grid-chart, .jx-grid-eq { grid-template-columns: 1fr; }
+}
+@media (max-width: 575px) {
+  .jx-stats-9 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .jx-stat { padding: 14px 12px; gap: 10px; }
+  .jx-stat-icon { width: 40px; height: 40px; font-size: 18px; }
+  .jx-stat-num { font-size: 22px; }
+  .jx-stat-label { font-size: 11px; }
+  .jx-chart { height: 240px; }
+  .jx-activity > li > a { white-space: normal; }
+}
 
 @media (max-width: 767px) {
   .jx-welcome { padding: 20px; }

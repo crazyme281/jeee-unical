@@ -53,10 +53,45 @@ class ManuscriptCrudController extends CrudController
             [
                 'name' => 'keywords'
             ],
-            [   // Enum
+            [
                 'name' => 'status',
                 'label' => 'Status',
-                'type' => 'enum'
+                'type' => 'select_from_array',
+                'options' => [
+                    'Draft' => 'Draft',
+                    'Submitted' => 'Submitted',
+                    'Review' => 'Review',
+                    'Revision' => 'Revision (awaiting author)',
+                    'Approved' => 'Approved',
+                    'Rejected' => 'Rejected',
+                ],
+                'allows_null' => false
+            ],
+            [
+                'name' => 'editor_id',
+                'label' => 'Assigned Editor',
+                'type' => 'select2_from_array',
+                'options' => User::where('admin', true)->orderBy('first_name')->get()
+                    ->mapWithKeys(function ($u) { return [$u->id => trim($u->first_name.' '.$u->last_name)]; })->all(),
+                'allows_null' => true
+            ],
+            [
+                'name' => 'reviewer_id',
+                'label' => 'Assigned Reviewer',
+                'type' => 'select2_from_array',
+                'options' => User::where('reviewer', true)->orderBy('first_name')->get()
+                    ->mapWithKeys(function ($u) { return [$u->id => trim($u->first_name.' '.$u->last_name)]; })->all(),
+                'allows_null' => true
+            ],
+            [
+                'name' => 'review_deadline',
+                'label' => 'Editorial / Review Deadline',
+                'type' => 'date'
+            ],
+            [
+                'name' => 'report_received_at',
+                'label' => 'Reviewer Report Received',
+                'type' => 'date'
             ],
             [   // Upload
                 'name' => 'file',

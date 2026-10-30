@@ -41,7 +41,7 @@
                                     <span class="label label-{{ $manuscript->StatusClass }}">{{ $manuscript['status'] }}</span>
                                 </td>
                                 <td class="td-actions text-right">
-                                    <a href="{{ route('manuscripts.edit', $manuscript['id']) }}" rel="tooltip" title="" class="btn btn-success btn-simple btn-xs" data-original-title="Edit Manuscript" {{ $manuscript['status'] == 'Review' ? '' : 'disabled' }}>
+                                    <a href="{{ route('manuscripts.edit', $manuscript['id']) }}" rel="tooltip" title="" class="btn btn-success btn-simple btn-xs" data-original-title="Edit Manuscript" {{ in_array($manuscript['status'], ['Review', 'Revision']) ? '' : 'disabled' }}>
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </td>
