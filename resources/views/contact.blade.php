@@ -4,6 +4,7 @@
 @section('nav', 'contact')
 
 @section('content')
+
   <section class="page-head">
     <div class="container">
       <h1>Communication</h1>
@@ -20,16 +21,20 @@
       </section>
 
       <div class="contact-grid">
-        <section class="contact-card card contact-wide">
-          <h2 class="eyebrow">FOUNDING EDITOR: BARTH N. EKWUEME (CALABAR – NIGERIA)</h2>
+        <section class="contact-card contact-wide card">
+          <h2 class="eyebrow">FOUNDING EDITOR</h2>
+          <p> Barth N. Ekwueme (CALABAR, NIGERIA)
+        </section>
+
+        <section class="contact-card contact-wide card">
+          <h2 class="eyebrow">EDITORIAL BOARD</h2>
         </section>
 
         <section class="contact-card card">
-          <h2 class="eyebrow">EDITORIAL BOARD</h2>
           <p><strong>Professor Fidelis Abam</strong></p>
           <p>Department of Mechanical Engineering, University of Calabar, Calabar, Nigeria</p>
           <p><a href="mailto:fidelisabam@unical.edu.ng">fidelisabam@unical.edu.ng</a></p>
-          <p>Scopus ID: 34767767800<br>ORCID: <a href="https://orcid.org/0000-0001-6794-0118" target="_blank" rel="noopener">https://orcid.org/0000-0001-6794-0118</a></p>
+          <p>Scopus ID: 34767767800<br>ORCID NO: <a href="https://orcid.org/0000-0001-6794-0118" target="_blank" rel="noopener">https://orcid.org/0000-0001-6794-0118</a></p>
         </section>
 
         <section class="contact-card card">
