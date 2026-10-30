@@ -1,0 +1,339 @@
+/* JETSI redesign: preview.css + preview-additions.css combined, plus the small additions at the end. */
+/* JETSI redesign preview. Colours are estimated from the current site; adjust the variables below. */
+:root {
+  --magenta: #a9247f;
+  --magenta-dark: #861c64;
+  --blue: #2f7bbf;
+  --blue-dark: #25639b;
+  --ink: #1d2230;
+  --muted: #5d6475;
+  --line: #e3e5ea;
+  --bg: #ffffff;
+  --bg-alt: #f7f7f7;
+  --hero-dark: #0b1020;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(16, 24, 40, .08), 0 1px 2px rgba(16, 24, 40, .06);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; overscroll-behavior-y: none; }
+body { margin: 0; font-family: Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.55; }
+img { max-width: 100%; height: auto; }
+a { color: var(--magenta); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5rem; }
+p { margin: 0 0 .5rem; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+.container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+.narrow { max-width: 760px; }
+.skip-link { position: absolute; left: -999px; top: 0; background: #fff; padding: 8px 14px; z-index: 100; }
+.skip-link:focus { left: 8px; top: 8px; }
+.material-icons { font-size: 20px; vertical-align: middle; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 4px; border: 2px solid transparent;
+  font: 500 14px/1 Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; text-decoration: none !important; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-outline { border-color: #fff; color: #fff; }
+.btn-outline:hover { background: rgba(255, 255, 255, .15); }
+
+/* Header */
+.site-header { background: var(--magenta); position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 6px rgba(0, 0, 0, .2); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 68px; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; color: #fff; }
+.brand:hover { text-decoration: none; }
+.brand img { height: 46px; width: auto; }
+.brand-name { font-weight: 700; font-size: 20px; letter-spacing: .04em; line-height: 1.1; }
+.brand-name small { display: block; font-weight: 400; font-size: 10px; letter-spacing: 0; opacity: .9; }
+.main-nav ul { display: flex; align-items: center; gap: 4px; }
+.main-nav a { color: #fff; padding: 10px 12px; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .03em; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; }
+.main-nav a:hover { background: rgba(255, 255, 255, .15); text-decoration: none; }
+.main-nav a[aria-current="page"] { box-shadow: inset 0 -3px 0 #fff; border-radius: 0; }
+.main-nav .btn { padding: 9px 14px; }
+.main-nav .btn-primary { margin-left: 6px; }
+.nav-toggle { display: none; background: none; border: 0; color: #fff; cursor: pointer; padding: 6px; }
+
+/* Hero */
+.hero { position: relative; color: #fff; padding: 72px 0 64px;
+  background: linear-gradient(180deg, rgba(11, 16, 32, .78), rgba(11, 16, 32, .88)), url("../img/engineering1.jpeg") center/cover no-repeat, var(--hero-dark); }
+.hero-logos { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 24px; }
+.hero-logo { display: block; width: clamp(100px, 16vw, 160px); height: auto; margin: 0; object-fit: contain; }
+.hero h1 { font-size: clamp(28px, 4.5vw, 46px); font-weight: 700; text-align: center; margin-bottom: 14px; }
+.tagline { text-align: center; font-size: 18px; max-width: 700px; margin: 0 auto 32px; opacity: .92; }
+
+.search-card { background: #fff; color: var(--ink); border-radius: var(--radius); padding: 20px; display: grid; grid-template-columns: 2fr 1.5fr 1.5fr auto; gap: 16px; align-items: end; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
+.field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.field input { width: 100%; padding: 10px 12px; font: 16px Roboto, Arial, sans-serif; border: 1px solid #c9ccd4; border-radius: 4px; background: #fff; color: var(--ink); }
+.field input:focus { border-color: var(--blue); }
+
+/* Facts strip (adapts to however many items are showing) */
+.facts { background: var(--bg-alt); border-bottom: 1px solid var(--line); }
+.facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding-top: 16px; padding-bottom: 16px; }
+.fact-label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.fact-value { font-weight: 500; }
+
+/* Sections */
+.section { padding: 56px 0; }
+.section-alt { background: var(--bg-alt); }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid var(--magenta); padding-bottom: 8px; }
+.section-head h2 { font-size: 26px; font-weight: 400; margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; color: var(--magenta); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.meta { font-size: 14px; color: var(--muted); margin-bottom: 2px; }
+.link-arrow { font-weight: 500; font-size: 14px; display: inline-flex; align-items: center; gap: 4px; }
+
+/* Current issue (full-width feature) */
+.current-issue { padding: 28px 32px; border-left: 4px solid var(--magenta); }
+.current-body { display: flex; gap: 28px; align-items: center; }
+.current-body h2 { font-size: 26px; margin-bottom: 8px; }
+.current-body .btn { margin-top: 14px; }
+
+/* Covers (placeholder until the Issue image is shown) */
+.cover { flex: 0 0 96px; height: 128px; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center;
+  color: #fff; font-weight: 700; font-size: 15px; line-height: 1.3; background: linear-gradient(145deg, var(--magenta), #5c1b6a 70%, var(--hero-dark)); box-shadow: 0 4px 10px rgba(0, 0, 0, .25); }
+.cover-large { flex-basis: 140px; height: 186px; font-size: 20px; }
+
+/* Recent issues: three cards, wraps automatically on smaller screens */
+.issue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.issue { display: flex; gap: 18px; padding: 18px; }
+.issue h3 { font-size: 18px; }
+
+/* Articles
+   Fix 3: rows are top-aligned so the rank circle and views pill start level
+   with the title. The circle and pill are 28px tall, the title's first line is
+   about 21px (17px x 1.25), so a -3px top margin centres both on that first line. */
+.article-list { display: grid; gap: 12px; }
+.article { display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; }
+.rank { flex: 0 0 28px; height: 28px; margin-top: -3px; border-radius: 50%; background: var(--bg-alt); color: var(--magenta); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.article-body { flex: 1; min-width: 0; }
+.article h3 { font-size: 17px; font-weight: 500; }
+.article h3 a { color: var(--ink); }
+.article h3 a:hover { color: var(--magenta); }
+.authors { font-size: 14px; color: var(--ink); }
+.views { display: inline-flex; align-items: center; gap: 4px; height: 28px; margin-top: -3px; font-size: 13px; color: var(--muted); background: var(--bg-alt); border-radius: 999px; padding: 0 10px; }
+.views .material-icons { font-size: 16px; }
+
+/* About + author call-to-action (dark band) */
+.aims-band { background: var(--hero-dark); color: #fff; padding: 48px 0; }
+.aims-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.aims-text { max-width: 760px; }
+.aims-text h2 { font-size: 26px; font-weight: 400; margin-bottom: 10px; }
+.aims-text p { font-size: 17px; line-height: 1.65; opacity: .92; margin: 0; }
+.aims-inner .btn { flex: 0 0 auto; }
+
+/* Newsletter */
+.newsletter { background: var(--bg-alt); text-align: center; }
+.newsletter h2 { font-size: 28px; font-weight: 400; }
+.newsletter p { color: var(--muted); }
+.newsletter-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; margin-top: 24px; text-align: left; }
+
+/* Footer */
+.site-footer { background: var(--hero-dark); color: #cfd3de; border-top: 1px solid rgba(255, 255, 255, .12); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 32px; padding-top: 48px; padding-bottom: 36px; }
+.footer-brand img { height: 56px; margin-bottom: 10px; }
+.footer-brand p { font-size: 14px; max-width: 280px; }
+.site-footer h4 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+.site-footer li { margin-bottom: 8px; }
+.site-footer a { color: #cfd3de; font-size: 14px; }
+.site-footer a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .12); padding: 16px 0; font-size: 13px; }
+
+/* Inner pages: page title band */
+.page-head { background: var(--hero-dark); color: #fff; padding: 36px 0; }
+.page-head h1 { font-size: 34px; font-weight: 400; margin: 0; }
+.page-head .eyebrow { color: #f0a8d7; }
+.page-intro { max-width: 680px; margin: 12px 0 0; color: #d7dbe5; font-size: 16px; }
+
+/* Contact, subscription and submission pages */
+.contact-page, .subscription-page { background: var(--bg-alt); }
+.contact-intro { display: flex; align-items: flex-start; gap: 20px; padding: 28px 32px; margin-bottom: 24px; }
+.contact-intro h2, .contact-card h2 { font-size: 20px; font-weight: 500; margin-bottom: 10px; }
+.contact-intro p:last-child, .contact-card p:last-of-type { margin-bottom: 0; }
+.contact-icon { flex: 0 0 48px; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: #f7eaf3; color: var(--magenta); font-size: 24px; }
+.contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.contact-card { padding: 24px; }
+.contact-card .eyebrow { margin-bottom: 8px; }
+.contact-role { color: var(--muted); }
+.contact-emails { margin-top: 12px; }
+.contact-emails li { margin-top: 6px; }
+.contact-publisher { grid-column: 1 / -1; }
+
+.subscription-pricing, .bank-payment { margin-bottom: 40px; }
+.rate-grid, .bank-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.rate-card { padding: 24px; }
+.rate-card > .material-icons { color: var(--magenta); font-size: 28px; margin-bottom: 16px; }
+.rate-card h3, .bank-card h3 { font-size: 17px; font-weight: 500; margin-bottom: 12px; }
+.rate-amount { font-size: 23px; font-weight: 700; color: var(--ink); margin: 0; }
+.rate-amount span { display: block; margin-top: 4px; font-size: 14px; font-weight: 400; color: var(--muted); }
+.subscription-note { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.payment-panel { padding: 28px; margin-bottom: 40px; border-top: 4px solid var(--magenta); }
+.subscription-status { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: #e8f5ee; color: #14532d; border-radius: 4px; margin-bottom: 16px; }
+.subscription-status .material-icons { font-size: 20px; }
+.subscription-form { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 16px; margin-top: 20px; }
+.subscription-form .field label { color: var(--muted); }
+.subscription-form select { width: 100%; padding: 10px 12px; min-height: 42px; border: 1px solid #c9ccd4; border-radius: 4px; background: #fff; color: var(--ink); font: 16px Roboto, Arial, sans-serif; }
+.subscription-form .btn { min-height: 42px; justify-content: center; white-space: nowrap; }
+.payment-login-note { color: var(--muted); }
+.bank-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bank-card { padding: 24px; }
+.bank-card .eyebrow { margin-bottom: 8px; }
+.bank-card dl { margin: 18px 0 0; }
+.bank-card dl > div { display: grid; grid-template-columns: 125px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.bank-card dt { color: var(--muted); font-size: 14px; font-weight: 500; }
+.bank-card dd { margin: 0; font-size: 14px; }
+
+.guideline-page { background: var(--bg-alt); }
+.guideline-section .col-md-8 { max-width: 860px; margin: 0 auto; padding: 30px 34px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.guideline-section .title h3 { color: var(--ink); font-size: 21px; font-weight: 500; margin: 0 0 18px; }
+.guideline-section .col-md-8 p { color: #42495a; font-size: 15px; line-height: 1.75; margin-bottom: 16px; }
+.guideline-section .col-md-8 h4 { color: var(--magenta-dark); font-size: 17px; font-weight: 500; margin: 18px 0 8px; }
+.guideline-ad { padding-top: 32px; padding-bottom: 0; }
+.guideline-ad .col-md-8 { max-width: 860px; margin: 0 auto; padding: 26px 30px; background: #f7eaf3; border: 1px solid #ead2e2; border-radius: var(--radius); text-align: center; }
+.guideline-ad h2 { font-size: 22px; font-weight: 500; }
+.guideline-ad h4 { color: var(--muted); font-size: 15px; font-weight: 400; margin: 8px 0 16px; }
+
+/* Long-form page: sticky "On this page" sidebar + readable content column */
+.page-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: start; padding-top: 40px; padding-bottom: 56px; }
+.toc { position: sticky; top: 88px; }
+.toc h2 { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.toc a { display: block; padding: 8px 12px; border-left: 3px solid var(--line); color: var(--ink); font-size: 14px; font-weight: 500; }
+.toc a:hover { border-color: var(--magenta); color: var(--magenta); text-decoration: none; }
+.doc { max-width: 820px; }
+.doc section { scroll-margin-top: 88px; margin-bottom: 48px; }
+.doc h2 { font-size: 24px; font-weight: 400; border-bottom: 2px solid var(--magenta); padding-bottom: 8px; margin-bottom: 18px; }
+.doc .lead { font-size: 17px; line-height: 1.65; }
+.doc h3.sub { font-size: 18px; font-weight: 700; margin: 24px 0 12px; }
+.panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.panel { padding: 20px 22px; }
+.panel h3 { font-size: 18px; font-weight: 500; color: var(--magenta); margin-bottom: 10px; }
+.panel li { font-size: 15px; margin-bottom: 6px; }
+.panel p { font-size: 15px; }
+.list-num { list-style: decimal; padding-left: 22px; }
+.list-dot { list-style: disc; padding-left: 20px; }
+.panel .label { font-weight: 700; margin: 12px 0 4px; }
+.panel .label:first-child { margin-top: 0; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .search-card { grid-template-columns: 1fr 1fr; }
+  .search-card .btn { grid-column: 1 / -1; justify-content: center; }
+  .aims-inner { flex-direction: column; align-items: flex-start; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .rate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-brand { grid-column: 1 / -1; }
+  .nav-toggle { display: block; }
+  .main-nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--magenta-dark); }
+  .main-nav.open { display: block; }
+  .main-nav ul { flex-direction: column; align-items: stretch; padding: 8px 20px 16px; }
+  .main-nav .btn-primary { margin: 6px 0 0; justify-content: center; }
+  .page-layout { grid-template-columns: 1fr; gap: 24px; }
+  .toc { position: static; }
+  .toc nav { display: flex; flex-wrap: wrap; gap: 8px; }
+  .toc a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+}
+@media (max-width: 560px) {
+  .search-card, .newsletter-form { grid-template-columns: 1fr; }
+  .contact-grid, .rate-grid, .bank-grid, .subscription-form { grid-template-columns: 1fr; }
+  .contact-intro { padding: 22px; flex-direction: column; }
+  .contact-card, .rate-card, .bank-card, .payment-panel { padding: 22px; }
+  .subscription-form .btn { width: 100%; }
+  .bank-card dl > div { grid-template-columns: 1fr; gap: 2px; }
+  .guideline-section .col-md-8, .guideline-ad .col-md-8 { padding: 22px; }
+  .current-issue { padding: 20px; }
+  .current-body { flex-direction: column; align-items: flex-start; }
+  .issue-grid { grid-template-columns: 1fr; }
+  .article { flex-wrap: wrap; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .panel-grid { grid-template-columns: 1fr; }
+}
+
+/* Additions to preview.css: dropdown boxes, message boxes and pagination.
+   Loaded after preview.css by partials/header.php, so preview.css itself is untouched.
+   When the final styles are put together, this can simply be pasted onto the end of preview.css. */
+
+/* Dropdown (select) boxes look like the text boxes */
+.field select { width: 100%; padding: 10px 12px; font: 16px Roboto, Arial, sans-serif; border: 1px solid #c9ccd4; border-radius: 4px; background: #fff; color: var(--ink); }
+.field select:focus { border-color: var(--blue); }
+select:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* Message boxes (success, info, warning, danger) shown under the navbar */
+.flash { display: flex; align-items: flex-start; gap: 12px; margin: 20px 0; padding: 14px 16px; border: 1px solid; border-radius: var(--radius); }
+.flash p { flex: 1; margin: 0; padding-top: 1px; }
+.flash .material-icons { flex: 0 0 auto; }
+.flash-close { flex: 0 0 auto; background: none; border: 0; padding: 0; color: inherit; cursor: pointer; line-height: 1; opacity: .7; }
+.flash-close:hover { opacity: 1; }
+.flash-close:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.flash-success { background: #e8f5ee; border-color: #9fd3b5; color: #14532d; }
+.flash-info    { background: #e8f1fa; border-color: #a9c9e8; color: #17436b; }
+.flash-warning { background: #fdf3e1; border-color: #ecc886; color: #6b4510; }
+.flash-danger  { background: #fdecec; border-color: #f0a8a8; color: #7a1d1d; }
+
+/* Pagination (Previous / Page X of Y / Next) */
+.pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px; }
+.pager a, .pager .is-disabled { padding: 8px 14px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; font-weight: 500; }
+.pager a:hover { border-color: var(--magenta); text-decoration: none; }
+.pager .is-disabled { color: var(--muted); opacity: .55; }
+.pager-status { font-size: 14px; color: var(--muted); }
+
+/* Login, register and password pages */
+.auth-card { max-width: 460px; margin: 0 auto; padding: 32px 28px; }
+.auth-card > .meta { margin-bottom: 20px; }
+.auth-form { display: grid; gap: 18px; }
+.auth-form .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.btn-block { display: flex; width: 100%; justify-content: center; }
+.btn-secondary { background: #fff; color: var(--ink); border-color: #c9ccd4; }
+.btn-secondary:hover { border-color: var(--blue); }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 22px 0; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; border-top: 1px solid var(--line); }
+.auth-links { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
+.check { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 0; }
+.auth-foot { margin: 22px 0 0; text-align: center; font-size: 15px; color: var(--muted); }
+.field-error { margin: 6px 0 0; font-size: 14px; color: #b42318; }
+.field.has-error input { border-color: #b42318; }
+
+@media (max-width: 560px) {
+    .auth-card { padding: 24px 18px; }
+    .auth-form .field-row { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------------------------------------------
+   Added when the preview was ported into the Laravel app.
+   The preview had no signed-in state or subscribe feedback, so these
+   small blocks cover them using the same colours and spacing.
+   ------------------------------------------------------------------ */
+
+/* Signed-in user menu in the navbar */
+.main-nav .user-menu { position: relative; }
+.user-toggle { background: none; border: 0; color: #fff; cursor: pointer; padding: 10px 12px; border-radius: 4px;
+  font: 500 13px/1 Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: .03em; display: inline-flex; align-items: center; gap: 4px; }
+.user-toggle:hover { background: rgba(255, 255, 255, .15); }
+.user-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.main-nav .user-dropdown { display: none; position: absolute; right: 0; top: 100%; min-width: 220px; flex-direction: column; align-items: stretch; gap: 0;
+  padding: 6px 0; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0, 0, 0, .2); z-index: 60; }
+.main-nav .user-dropdown.open { display: flex; }
+.main-nav .user-dropdown a { color: var(--ink); width: 100%; padding: 10px 16px; font-size: 14px; text-transform: none; letter-spacing: 0; border-radius: 0; }
+.main-nav .user-dropdown a:hover { background: var(--bg-alt); color: var(--magenta); }
+.main-nav .user-dropdown .divider { border-top: 1px solid var(--line); margin: 6px 0; }
+
+/* Subscribe message on the homepage */
+.newsletter-message { margin-top: 24px; font-size: 18px; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .main-nav .user-menu { width: 100%; }
+  .user-toggle { width: 100%; padding: 10px 12px; }
+  .main-nav .user-dropdown { position: static; min-width: 0; padding: 0 0 0 12px; background: transparent; border: 0; box-shadow: none; }
+  .main-nav .user-dropdown a { color: #fff; }
+  .main-nav .user-dropdown a:hover { background: rgba(255, 255, 255, .15); color: #fff; }
+  .main-nav .user-dropdown .divider { border-top-color: rgba(255, 255, 255, .25); }
+}
+
+/* Contact page */
+.contact-wide { grid-column: 1 / -1; }
+
+/* Author guidelines downloads */
+.guideline-downloads { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; margin: 8px 0 0; padding: 0; }
+.guideline-downloads .btn { display: inline-flex; align-items: center; gap: 6px; }

@@ -1,0 +1,18 @@
+
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^localhost/journal-app$ [NC,OR]
+
+RewriteCond %{HTTP_HOST} ^localhost/journal-app$
+
+RewriteCond %{REQUEST_URI} !public/
+
+RewriteRule (.*) /public/$1 [L]
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+
+# END cPanel-generated php ini directives, do not edit
