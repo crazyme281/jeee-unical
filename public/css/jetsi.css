@@ -216,6 +216,22 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .panel .label { font-weight: 700; margin: 12px 0 4px; }
 .panel .label:first-child { margin-top: 0; }
 
+.panel-wide { grid-column: 1 / -1; }
+
+.board-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+.board-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+.board-table th, .board-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+
+.board-table td:nth-child(3) { white-space: normal; min-width: 220px; }
+
+.board-table thead th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; border-bottom: 2px solid var(--line); }
+
+.board-table tbody tr:last-child td { border-bottom: none; }
+
+.board-table a { color: var(--magenta-dark); word-break: break-all; }
+
 /* Responsive */
 @media (max-width: 900px) {
   .search-card { grid-template-columns: 1fr 1fr; }

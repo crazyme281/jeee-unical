@@ -53,34 +53,59 @@
         <div class="panel-grid">
           <article class="card panel">
             <h3>Editorial Leadership</h3>
-            <p class="label">Founding Editor</p>
-            <p>Barth N. Ekwueme (Calabar – Nigeria)</p>
             <p class="label">Editor-in-Chief</p>
-            <p>Professor Fidelis Abam</p>
+            <p><strong>Professor Fidelis Abam</strong></p>
             <p>Department of Mechanical Engineering, University of Calabar, Calabar, Nigeria</p>
+            <p><a href="mailto:fidelisabam@unical.edu.ng">fidelisabam@unical.edu.ng</a></p>
+            <p>Scopus ID: 34767767800<br>ORCID NO: <a href="https://orcid.org/0000-0001-6794-0118" target="_blank" rel="noopener">0000-0001-6794-0118</a></p>
             <p class="label">Deputy Editor-in-Chief</p>
-            <p>Professor Ogri James Ushie</p>
+            <p><strong>Professor Ogri James Ushie</strong></p>
+            <p>Scopus ID: 59717735400</p>
           </article>
           <article class="card panel">
             <h3>Managing/Technical Editors</h3>
-            <ul class="list-dot">
-              <li>Dr. Edward Adah</li>
-              <li>Dr. Cordelia Omoyi</li>
-              <li>Dr. Ojong Elias Ojong</li>
-              <li>Dr. Paschal Ubi</li>
-              <li>Dr. Okon Edet Ita</li>
-            </ul>
+            <ol class="list-num">
+              <li><strong>Dr. Edward Adah</strong><br>Department of Civil and Environmental Engineering, University of Calabar, Calabar, Nigeria<br><a href="mailto:edwardadah@unical.edu.ng">edwardadah@unical.edu.ng</a></li>
+              <li><strong>Dr. Cordelia Omoyi</strong><br>Department of Mechanical Engineering, University of Calabar, Nigeria<br><a href="mailto:cordeliaochuole@unical.edu.ng">cordeliaochuole@unical.edu.ng</a><br>Scopus ID: 58921265000</li>
+              <li><strong>Dr. Ojong Elias Ojong</strong><br>Department of Chemical Engineering, University of Calabar, Nigeria</li>
+              <li><strong>Dr. Paschal Ubi</strong><br>Department of Mechanical Engineering, University of Calabar<br>Scopus ID: 58515068800, ORCID: <a href="https://orcid.org/0000-0002-4042-9077" target="_blank" rel="noopener">0000-0002-4042-9077</a></li>
+              <li><strong>Dr. Okon Edet Ita</strong><br>Department of Petroleum Engineering, University of Calabar<br>Scopus ID: 57211204447, ORCID: <a href="https://orcid.org/0000-0001-7544-9089" target="_blank" rel="noopener">0000-0001-7544-9089</a></li>
+            </ol>
           </article>
           <article class="card panel">
-            <h3>Journal Secretary and Production</h3>
-            <p class="label">Journal Secretary</p>
-            <p>Dr. Chememe Ekwueme</p>
+            <h3>Journal Secretary</h3>
+            <p><strong>Dr. Chememe Ekwueme</strong></p>
+            <p>Department of Civil Engineering, University of Calabar</p>
             <p class="label">Production Editors/Web Administrator</p>
-            <ul class="list-dot">
+            <ol class="list-num">
               <li>Dr. Patrick Adah</li>
               <li>Engr. Victor Ekpang</li>
               <li>Engr. Eludire Oluwadamilare</li>
-            </ul>
+            </ol>
+          </article>
+          <article class="card panel panel-wide">
+            <h3>Editorial Board Members</h3>
+            <div class="board-table">
+              <table>
+                <thead>
+                  <tr><th>S/No</th><th>Name</th><th>Affiliation</th><th>Scopus ID</th><th>ORCID ID</th><th>Email</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Professor Charles Mbohwa</td><td>University of South Africa, Pretoria, South Africa</td><td>6603262827</td><td><a href="https://orcid.org/0000-0002-8268-5984" target="_blank" rel="noopener">0000-0002-8268-5984</a></td><td><a href="mailto:mbohwc@unisa.ac.za">mbohwc@unisa.ac.za</a></td></tr>
+                  <tr><td>2</td><td>Professor Macmanus Ndukwu</td><td>Michael Okpara University of Agriculture Umudike, Nigeria</td><td>35300428300</td><td><a href="https://orcid.org/0000-0002-1361-9991" target="_blank" rel="noopener">0000-0002-1361-9991</a></td><td><a href="mailto:ndukwumcu@mouau.edu.ng">ndukwumcu@mouau.edu.ng</a></td></tr>
+                  <tr><td>3</td><td>Dr. Bola Udochukwu Akuru</td><td>Tshwane University of Technology, Pretoria, South Africa</td><td>39761022000</td><td><a href="https://orcid.org/0000-0002-5770-3669" target="_blank" rel="noopener">0000-0002-5770-3669</a></td><td></td></tr>
+                  <tr><td>4</td><td>Professor Diemuodeke Ogheneruona</td><td>University of Port Harcourt, Port Harcourt, Nigeria</td><td>36149855400</td><td><a href="https://orcid.org/0000-0002-0133-485X" target="_blank" rel="noopener">0000-0002-0133-485X</a></td><td><a href="mailto:ogheneruona.diemuodeke@uniport.edu.ng">ogheneruona.diemuodeke@uniport.edu.ng</a></td></tr>
+                  <tr><td>5</td><td>Professor Donatus Bassey</td><td>University of Calabar, Calabar, Nigeria</td><td>57217776458</td><td></td><td></td></tr>
+                  <tr><td>6</td><td>Professor Faithpraise Fina</td><td>University of Calabar, Calabar, Nigeria</td><td>56426391700</td><td><a href="https://orcid.org/0000-0001-8222-2034" target="_blank" rel="noopener">0000-0001-8222-2034</a></td><td></td></tr>
+                  <tr><td>7</td><td>Dr. Archibong-Eso, Archibong</td><td>University of Birmingham, Birmingham, United Kingdom</td><td>57211678390</td><td><a href="https://orcid.org/0000-0002-1749-978X" target="_blank" rel="noopener">0000-0002-1749-978X</a></td><td><a href="mailto:a.e.archibong@bham.ac.uk">a.e.archibong@bham.ac.uk</a></td></tr>
+                  <tr><td>8</td><td>Dr. Mashruk, Syed</td><td>Cardiff University, Cardiff, United Kingdom</td><td>57219939168</td><td><a href="https://orcid.org/0000-0002-3049-4932" target="_blank" rel="noopener">0000-0002-3049-4932</a></td><td></td></tr>
+                  <tr><td>9</td><td>Professor Odey Osha</td><td>University of Calabar</td><td></td><td></td><td></td></tr>
+                  <tr><td>10</td><td>Professor Samuel, Olusegun David</td><td>Federal University of Petroleum Resources, Effurun, Nigeria</td><td>26654977000</td><td><a href="https://orcid.org/0000-0002-6625-2820" target="_blank" rel="noopener">0000-0002-6625-2820</a></td><td></td></tr>
+                  <tr><td>11</td><td>Professor Patrick Okori</td><td>Ahmadu Bello University, Zaria, Nigeria</td><td></td><td></td><td></td></tr>
+                  <tr><td>12</td><td>Professor Briggs Tobinson</td><td>University of Port Harcourt, Nigeria</td><td></td><td></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
           </article>
           <article class="card panel">
             <h3>Editorial Office</h3>
