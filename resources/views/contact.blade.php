@@ -23,14 +23,11 @@
       <div class="contact-grid">
         <section class="contact-card contact-wide card">
           <h2 class="eyebrow">FOUNDING EDITOR</h2>
-          <p> Barth N. Ekwueme (CALABAR, NIGERIA)
-        </section>
-
-        <section class="contact-card contact-wide card">
-          <h2 class="eyebrow">EDITORIAL BOARD</h2>
+          <p> Barth N. Ekwueme (CALABAR, NIGERIA)</p>
         </section>
 
         <section class="contact-card card">
+          <h2 class="eyebrow">EDITORIAL BOARD</h2>
           <p><strong>Professor Fidelis Abam</strong></p>
           <p>Department of Mechanical Engineering, University of Calabar, Calabar, Nigeria</p>
           <p><a href="mailto:fidelisabam@unical.edu.ng">fidelisabam@unical.edu.ng</a></p>
