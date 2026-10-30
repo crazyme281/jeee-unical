@@ -15,8 +15,8 @@ return [
     'project_name' => env('APP_NAME'),
 
     // Menu logos
-    'logo_lg'   => '<b>JOMAARDUCTH</b>',
-    'logo_mini' => '<b>JOMAARDUCTH</b>',
+    'logo_lg'   => '<b>JETSI</b> Admin',
+    'logo_mini' => '<b>J</b>',
 
     // Developer or company name. Shown in footer.
     'developer_name' => 'SWAVY GLOBAL',

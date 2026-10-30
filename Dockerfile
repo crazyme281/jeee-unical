@@ -68,6 +68,19 @@ RUN composer dump-autoload --optimize --no-dev --no-scripts \
     && sed -i 's/\r$//' /usr/local/bin/start.sh \
     && chmod +x /usr/local/bin/start.sh
 
+# Backpack admin assets (AdminLTE, Bootstrap, DataTables, select2, pnotify, ...).
+# Backpack only auto-publishes these when APP_ENV=local, so in production the /admin
+# pages had no CSS/JS at all. Copy them straight out of vendor/ (same targets that
+# `php artisan vendor:publish --tag=public|adminlte` would write), no app boot needed.
+RUN set -eux; \
+    mkdir -p public/vendor/adminlte public/vendor/backpack; \
+    cp -r vendor/almasaeed2010/adminlte/bootstrap vendor/almasaeed2010/adminlte/dist vendor/almasaeed2010/adminlte/plugins public/vendor/adminlte/; \
+    cp -r vendor/backpack/base/src/public/. public/vendor/backpack/; \
+    cp -r vendor/backpack/crud/src/public/. public/vendor/backpack/; \
+    chown -R www-data:www-data public/vendor; \
+    test -f public/vendor/adminlte/dist/css/AdminLTE.min.css; \
+    test -f public/vendor/backpack/backpack.base.css
+
 EXPOSE 10000
 
 # start.sh finishes with `exec apache2-foreground`, so Apache is PID 1 and receives

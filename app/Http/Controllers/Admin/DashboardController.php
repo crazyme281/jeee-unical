@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Article;
+use App\Issue;
+use App\Manuscript;
+use App\Subscriber;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -25,6 +31,29 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $this->data['title'] = trans('backpack::base.dashboard'); // set the page title
+
+        $this->data['counts'] = [
+            'issues'      => Issue::count(),
+            'articles'    => Article::count(),
+            'manuscripts' => Manuscript::count(),
+            'subscribers' => Subscriber::count(),
+            'users'       => User::count(),
+        ];
+
+        // Manuscripts per status, in review-pipeline order (missing statuses show 0).
+        $by_status = Manuscript::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        $this->data['statuses'] = [];
+        foreach (['Draft', 'Submitted', 'Review', 'Approved', 'Rejected'] as $status) {
+            $this->data['statuses'][$status] = (int) $by_status->get($status, 0);
+        }
+
+        $this->data['recent_manuscripts'] = Manuscript::with('user')
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
 
         return view('backpack::dashboard', $this->data);
     }
