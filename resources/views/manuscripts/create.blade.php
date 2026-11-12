@@ -185,14 +185,14 @@
                                                 <span class="btn btn-default btn-file">
                                                     <span class="fileinput-new">Attach File</span>
                                                     <span class="fileinput-exists">Change</span>
-                                                    <input type="file" name="file" class="form-control" accept=".doc,.docx" required>
+                                                    <input type="file" name="file" class="form-control" accept=".doc,.docx,.pdf" required>
                                                 </span>
                                                 <span class="fileinput-filename"></span>
                                                 <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>
                                             </div>
 
                                             <span class="material-input"></span>
-                                            <small class="form-text text-muted">Typeset only [.doc, .docx].</small>
+                                            <small class="form-text text-muted">Choose a .doc, .docx, or .pdf file.</small>
                                             @if ($errors->has('file'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('file') }}</strong>
@@ -209,7 +209,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group is-empty {{ $errors->has('support_files[0][description]') ? ' has-error' : '' }}">
                                                         <label for="support_files[0][description]">Description</label>
-                                                        <input type="text" class="form-control description" name="support_files[0][description]" value="{{ old('support_files[0][description]') ?? $user['support_files[0][description'] }}">
+                                                        <input type="text" class="form-control description" name="support_files[0][description]" value="{{ old('support_files.0.description', '') }}">
                                                         <span class="material-input"></span>
                                                         <small class="form-text text-muted">E.g. Figure 2: Cross-sectional of ...</small>
                                                         @if ($errors->has('support_files[0][description]'))

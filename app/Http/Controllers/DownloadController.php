@@ -18,7 +18,7 @@ class DownloadController extends Controller
 
     public function article($id)
     {
-        $article = Article::findBySlug($id)->first();
+        $article = Article::findBySlugOrFail($id);
         $issue= $article->issue;
 
         if(!Auth::user()->subscribedToIssue($issue->id)){
@@ -29,6 +29,8 @@ class DownloadController extends Controller
             return redirect()->route('articles.show', $id)->with('status', $status);
         }
 
-        return response()->download("storage/{$article->file}");
+        $path = ltrim($article->file, '/');
+        abort_unless(\Storage::disk('public')->exists($path), 404);
+        return \Storage::disk('public')->download($path);
     }
 }

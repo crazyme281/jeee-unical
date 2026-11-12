@@ -26,7 +26,7 @@ class DashboardController extends Controller
     {
         $this->data['title'] = trans('backpack::base.dashboard'); // set the page title
 
-        return view('backpack::dashboard', $this->data);
+        return view(backpack_view('dashboard'), $this->data);
     }
 
     /**

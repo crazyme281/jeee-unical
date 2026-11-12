@@ -1,7 +1,7 @@
-# Render Blueprint for jeee_unical (Laravel 5.5 / PHP 7.3 / Supabase Postgres).
+# Render setup for Laravel 13, PHP 8.5.12, and Supabase Postgres.
 # The database is EXTERNAL (Supabase). Use the SESSION POOLER details from Supabase > Connect
 # (port 5432, user postgres.<project-ref>). Do not use port 6543 (transaction mode breaks Laravel).
-# See SUPABASE_SETUP.md.
+# Follow readme.md.
 services:
   - type: web
     name: jeee-unical
@@ -11,7 +11,7 @@ services:
     # Persistent disks need a paid instance type (free instances cannot attach one),
     # and a service with a disk runs as a single instance.
     plan: starter
-    # Pick the region closest to your MySQL host and your readers.
+    # Pick the region closest to Supabase and your readers.
     region: frankfurt
     # Static file served by Apache: confirms the container is up and listening.
     # (It does not exercise the database.)
@@ -31,12 +31,12 @@ services:
       - key: APP_DEBUG
         value: "false"
       - key: APP_KEY
-        sync: false            # base64:... see RENDER_DEPLOYMENT.md (do NOT use generateValue)
+        sync: false            # Full base64 value generated with artisan key:generate --show
       - key: APP_URL
         sync: false            # e.g. https://jeee-unical.onrender.com (or your custom domain)
-      - key: APP_LOG
-        value: errorlog        # logs go to the Render log stream, not a file on the ephemeral disk
-      - key: APP_LOG_LEVEL
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
         value: error
       # --- Database (Supabase Postgres, session pooler) ---
       - key: DB_CONNECTION
@@ -53,20 +53,20 @@ services:
         sync: false
       - key: DB_PASSWORD
         sync: false
-      # --- Drivers (same as the current app; see notes on sessions in RENDER_DEPLOYMENT.md) ---
+      # --- Storage and sessions ---
       - key: SESSION_DRIVER
         value: file
       - key: SESSION_SECURE_COOKIE
         value: "true"
-      - key: CACHE_DRIVER
+      - key: CACHE_STORE
         value: file
-      - key: QUEUE_DRIVER
+      - key: QUEUE_CONNECTION
         value: sync
       - key: BROADCAST_DRIVER
         value: log
       # --- Mail (SMTP) ---
-      - key: MAIL_DRIVER
-        value: smtp
+      - key: MAIL_MAILER
+        value: log
       - key: MAIL_HOST
         sync: false
       - key: MAIL_PORT
@@ -75,7 +75,7 @@ services:
         sync: false
       - key: MAIL_PASSWORD
         sync: false
-      - key: MAIL_ENCRYPTION
+      - key: MAIL_SCHEME
         sync: false
       # --- Third-party credentials ---
       - key: GOOGLE_OAUTH_ID
@@ -90,6 +90,6 @@ services:
       # Fresh Supabase database: "true" creates the tables on first boot (only pending
       # migrations run, nothing is dropped). Set back to "false" afterwards if you prefer.
       - key: RUN_MIGRATIONS
-        value: "true"
+        value: "false"
       - key: CACHE_CONFIG
         value: "true"

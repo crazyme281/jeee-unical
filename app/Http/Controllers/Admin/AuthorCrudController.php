@@ -9,8 +9,9 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\AuthorRequest as StoreRequest;
 use App\Http\Requests\AuthorRequest as UpdateRequest;
 
-class AuthorCrudController extends CrudController
+class AuthorCrudController extends JournalCrudController
 {
+    protected $requestClass = StoreRequest::class;
     public function setup()
     {
 
@@ -137,21 +138,4 @@ class AuthorCrudController extends CrudController
         // $this->crud->limit();
     }
 
-    public function store(StoreRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::storeCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
-
-    public function update(UpdateRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::updateCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
 }

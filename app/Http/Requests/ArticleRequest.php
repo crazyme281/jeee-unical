@@ -25,7 +25,13 @@ class ArticleRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'title' => 'required|string|max:250',
+            'abstract' => 'required|string',
+            'authors' => 'required|string',
+            'keywords' => 'required|string',
+            'issue_id' => 'required|exists:issues,id',
+            'type' => 'required|string',
+            'file' => request()->hasFile('file') ? 'required|file|mimes:pdf|max:215040' : 'nullable|string',
         ];
     }
 

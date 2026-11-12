@@ -16,7 +16,20 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'sparkpost'),
+    'default' => env('MAIL_MAILER', 'log'),
+    'mailers' => [
+        'log' => ['transport' => 'log'],
+        'array' => ['transport' => 'array'],
+        'smtp' => [
+            'transport' => 'smtp',
+            'scheme' => env('MAIL_SCHEME'),
+            'host' => env('MAIL_HOST', '127.0.0.1'),
+            'port' => env('MAIL_PORT', 587),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => 15,
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

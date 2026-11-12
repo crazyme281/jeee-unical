@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => 'Nigerian Journal of Medicine',
+    'name' => env('APP_NAME', 'JETSI'),
 
     /*
     |--------------------------------------------------------------------------
@@ -192,6 +192,9 @@ return [
     */
 
     'aliases' => [
+
+        'Str' => Illuminate\Support\Str::class,
+        'Arr' => Illuminate\Support\Arr::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

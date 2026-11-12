@@ -9,8 +9,9 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\ArticleRequest as StoreRequest;
 use App\Http\Requests\ArticleRequest as UpdateRequest;
 
-class ArticleCrudController extends CrudController
+class ArticleCrudController extends JournalCrudController
 {
+    protected $requestClass = StoreRequest::class;
     public function setup()
     {
 
@@ -43,7 +44,7 @@ class ArticleCrudController extends CrudController
             [
                 'name' => 'abstract',
                 'label' => 'Abstract',
-                'type' => 'tinymce',
+                'type' => 'textarea',
                 'attributes' => [
                     'rows' => 10
                 ]
@@ -60,7 +61,11 @@ class ArticleCrudController extends CrudController
             [   // Enum
                 'name' => 'type',
                 'label' => 'Type',
-                'type' => 'enum'
+                'type' => 'enum',
+                'options' => array_combine(
+                    ['Original', 'Review', 'Report', 'Commentary', 'Clinical Practice', 'Letter to Editor', 'Short Communication', 'View Point', 'Book Review'],
+                    ['Original', 'Review', 'Report', 'Commentary', 'Clinical Practice', 'Letter to Editor', 'Short Communication', 'View Point', 'Book Review']
+                ),
             ],
             ['name' => 'featured', 'type' => 'checkbox'],
             [
@@ -146,21 +151,4 @@ class ArticleCrudController extends CrudController
         // $this->crud->limit();
     }
 
-    public function store(StoreRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::storeCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
-
-    public function update(UpdateRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::updateCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
 }

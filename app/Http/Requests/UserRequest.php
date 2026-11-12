@@ -25,13 +25,11 @@ class UserRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
      */
     public function rules()
     {
-        $ignore = 0;
-        if($edit = $this->request->has('id')) { // updating
-            $ignore = $this->user()->is_admin ? $this->request->get('id') : \Auth::id();
-        }
+        $ignore = request('id', request()->route('id', 0));
+        $edit = (bool) $ignore;
 
-        if($this->user()->is_admin) {
-            if(\Auth::id() == $this->request->get('id')) // make sure user can not remove himself as admin
+        if(\Auth::user()?->is_admin) {
+            if(\Auth::id() == $ignore) // make sure user can not remove himself as admin
                 $admin_rule = 'in:1';
             else
                 $admin_rule = 'in:0,1';

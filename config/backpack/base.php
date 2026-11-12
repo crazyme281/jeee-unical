@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'registration_open' => (env('APP_ENV') == 'local') ? true : false,
+    'registration_open' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,15 @@ return [
 
     // Set this to false if you would like to use your own AuthController and PasswordController
     // (you then need to setup your auth routes manually in your routes.php file)
-    'setup_auth_routes' => true,
+    'setup_auth_routes' => false,
+    'setup_my_account_routes' => false,
+    'setup_password_recovery_routes' => false,
+    'middleware_class' => [\App\Http\Middleware\CheckIfAdmin::class],
+    'middleware_key' => 'admin',
+    'guard' => 'web',
+    'passwords' => 'users',
+    'authentication_column' => 'email',
+    'email_column' => 'email',
 
     // Set this to false if you would like to skip adding the dashboard routes
     // (you then need to overwrite the login route on your AuthController)

@@ -22,15 +22,13 @@ class ManuscriptRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
      */
     public function rules()
     {
-        $file = 'mimes:doc,docx';
-        if($this->request->has('file') && $this->request->get('file') == null) {
-            $file .= "|required";
-        }
+        $file = request()->hasFile('file') ? 'file|mimes:doc,docx,pdf|max:215040' : 'nullable|string';
         return [
             'title' => 'required|string|min:10|max:200',
             'abstract' => 'required|string|min:50|max:5000',
             'keywords' => 'required|string|min:3|max:50',
-            'file' =>  $file
+            'file' => $file,
+            'support_files.*' => request()->hasFile('support_files') ? 'file|mimes:doc,docx,pdf,jpg,jpeg,png,xlsx,xls|max:215040' : 'nullable',
         ];
     }
 

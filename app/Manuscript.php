@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Manuscript extends Model
@@ -18,10 +18,6 @@ class Manuscript extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
-    }
-
-    public function authors() {
-        return $this->hasMany(Author::class);
     }
 
     public function getStatusClassAttribute() {
@@ -71,15 +67,15 @@ class Manuscript extends Model
 
     public function setFileAttribute($value) {
         $attribute_name = "file";
-        $this->uploadFileToDisk($value, $attribute_name);
+        $this->storePrimaryFile($value, $attribute_name);
     }
 
     public function setSupportFilesAttribute($value) {
         $attribute_name = "support_files";
-        $this->uploadMultipleFilesToDisk($attribute_name);
+        $this->storeSupportingFiles($attribute_name);
     }
 
-    public function uploadFileToDisk($value, $attribute_name)
+    public function storePrimaryFile($value, $attribute_name)
     {
         $request = \Request::instance();
 
@@ -124,7 +120,7 @@ class Manuscript extends Model
             $stored_primary_file = File::create([
                 'name' => $original_name,
                 'link' => "{$path}/{$full_name}",
-                'size' => $file->getClientSize(),
+                'size' => $file->getSize(),
                 'type' => 'docx'
             ]);
 
@@ -132,7 +128,7 @@ class Manuscript extends Model
         }
     }
 
-    public function uploadMultipleFilesToDisk($attribute_name)
+    public function storeSupportingFiles($attribute_name)
     {
         $request = \Request::instance();
 
@@ -151,7 +147,7 @@ class Manuscript extends Model
         if ($files_to_clear) {
             foreach ($files_to_clear as $key => $filename) {
                 // Delete associated file
-                $file = File::where('link', $filename)->first();
+                $file = File::whereIn('id', $this->supporting_files ?? [])->where('link', $filename)->first();
                 if($file)
                     $file->delete();
 
@@ -164,18 +160,17 @@ class Manuscript extends Model
         $path = '/submissions';
         // if a new file is uploaded, store it on disk and its filename in the database
         if($request->has($attribute_name)){
-            foreach ($request[$attribute_name] as $file){
-                // If immediate file
-                if (!$request->hasFile($attribute_name)) {
-                    // Check if file is wrapped and with description
-                    if(!isset($file['file']) || empty($file['description'])){
+            foreach ($request->all()[$attribute_name] as $file){
+                $description = null;
+                if (is_array($file)) {
+                    if (!isset($file['file']) || !$file['file'] instanceof \Illuminate\Http\UploadedFile) {
                         continue;
                     }
-                    $description = $file['description'];
+                    $description = $file['description'] ?? null;
                     $file = $file['file'];
                 }
 
-                if ($file->isValid()) {
+                if ($file instanceof \Illuminate\Http\UploadedFile && $file->isValid()) {
                     $name = str_random(20);
                     $original_name = $file->getClientOriginalName();
                     $ex = $file->extension();
@@ -187,7 +182,7 @@ class Manuscript extends Model
                         'name' => $original_name,
                         'description' => $description ?? $original_name,
                         'link' => "{$path}/{$full_name}",
-                        'size' => $file->getClientSize(),
+                        'size' => $file->getSize(),
                         'type' => 'docx'
                     ]);
 
@@ -197,16 +192,18 @@ class Manuscript extends Model
             }
         }
 
-        if ($request->hasFile($attribute_name)) {
-            foreach ($request->file($attribute_name) as $file) {
-
-            }
-        }
-
         $files = File::query()->whereIn('link', $attribute_value)->pluck('id');
 
         $this->setAttribute('supporting_files', $files->toArray());
     }
 
     /*End Admin Crud Files*/
+
+    public function setAuthorsAttribute($value)
+    {
+        if (is_string($value)) {
+            $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+        }
+        $this->attributes['authors'] = json_encode($value);
+    }
 }

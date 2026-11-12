@@ -22,7 +22,7 @@ class ArticleController extends Controller
 
     public function show($slug)
     {
-        $article = $this->article->findBySlug($slug);
+        $article = $this->article->findBySlugOrFail($slug);
         $related_articles = Article::where('issue_id', $article->issue_id)->where('id', '<>', $article->id)->take(4)->get();
 
         // Count views

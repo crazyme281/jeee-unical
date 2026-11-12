@@ -8,8 +8,9 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\IssueRequest as StoreRequest;
 use App\Http\Requests\IssueRequest as UpdateRequest;
 
-class IssueCrudController extends CrudController
+class IssueCrudController extends JournalCrudController
 {
+    protected $requestClass = StoreRequest::class;
     public function setup()
     {
 
@@ -55,12 +56,14 @@ class IssueCrudController extends CrudController
             ],
             [
                 'name' => 'status',
-                'type' => 'enum'
+                'type' => 'enum',
+                'options' => ['Current' => 'Current', 'Published' => 'Published'],
             ],
             [ // image
                 'label' => "Image",
                 'name' => "image",
-                'type' => 'image',
+                'type' => 'upload',
+                'disk' => 'public',
                 'upload' => true,
                 'crop' => true, // set to true to allow cropping, false to disable
                 'aspect_ratio' => 1, // ommit or set to 0 to allow any aspect ratio
@@ -132,21 +135,4 @@ class IssueCrudController extends CrudController
         // $this->crud->limit();
     }
 
-    public function store(StoreRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::storeCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
-
-    public function update(UpdateRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::updateCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
 }

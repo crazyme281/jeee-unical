@@ -104,13 +104,13 @@
                                     </div>
 
                                     <div class="authors">
-                                        @foreach($manuscript['authors'] as $author)
+                                        @foreach($manuscript['authors'] ?? [] as $author)
                                             <div data-index="{{ $loop->index }}" class="row author-entry">
                                                 <div class="col-md-offset-1 col-md-10">
                                                     <div class="col-md-6">
                                                         <div class="form-group is-empty {{ $errors->has('authors[names]') ? ' has-error' : '' }}">
                                                             <label for="authors[{{ $loop->index }}][names]">Names</label>
-                                                            <input type="text" class="form-control names" name="authors[{{ $loop->index }}][names]" value="{{ $author['names'] }}">
+                                                            <input type="text" class="form-control names" name="authors[{{ $loop->index }}][names]" value="{{ $author['names'] ?? '' }}">
                                                             <span class="material-input"></span>
                                                             @if ($errors->has('authors[names]'))
                                                                 <span class="help-block">
@@ -123,7 +123,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group is-empty {{ $errors->has('authors[email]') ? ' has-error' : '' }}">
                                                             <label for="authors[{{ $loop->index }}][email]">Email</label>
-                                                            <input type="text" class="form-control email" name="authors[{{ $loop->index }}][email]" value="{{ $author['email'] }}">
+                                                            <input type="text" class="form-control email" name="authors[{{ $loop->index }}][email]" value="{{ $author['email'] ?? '' }}">
                                                             <span class="material-input"></span>
                                                             @if ($errors->has('authors[email]'))
                                                                 <span class="help-block">
@@ -138,7 +138,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group is-empty {{ $errors->has('authors') ? ' has-error' : '' }}">
                                                             <label for="authors[{{ $loop->index }}][institution]">Institution</label>
-                                                            <input type="text" class="form-control institution" name="authors[{{ $loop->index }}][institution]" value="{{ $author['institution'] }}">
+                                                            <input type="text" class="form-control institution" name="authors[{{ $loop->index }}][institution]" value="{{ $author['institution'] ?? '' }}">
                                                             <span class="material-input"></span>
                                                             @if ($errors->has('authors'))
                                                                 <span class="help-block">
@@ -151,7 +151,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group is-empty {{ $errors->has('authors') ? ' has-error' : '' }}">
                                                             <label for="authors[{{ $loop->index }}][department]">Department</label>
-                                                            <input type="text" class="form-control department" name="authors[{{ $loop->index }}][department]" value="{{ $author['department'] }}">
+                                                            <input type="text" class="form-control department" name="authors[{{ $loop->index }}][department]" value="{{ $author['department'] ?? '' }}">
                                                             <span class="material-input"></span>
                                                             @if ($errors->has('authors'))
                                                                 <span class="help-block">
@@ -206,7 +206,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group is-empty {{ $errors->has('support_files[0][description]') ? ' has-error' : '' }}">
                                                         <label for="names">Description</label>
-                                                        <input type="text" class="form-control description" name="support_files[0][description]" value="{{ old('support_files[0][description]') ?? $manuscript['support_files[0][description'] }}">
+                                                        <input type="text" class="form-control description" name="support_files[0][description]" value="{{ old('support_files.0.description', '') }}">
                                                         <span class="material-input"></span>
                                                         <small class="form-text text-muted">E.g. Corrections, Figure 2: Cross-sectional of ...</small>
                                                         @if ($errors->has('support_files[0][description]'))

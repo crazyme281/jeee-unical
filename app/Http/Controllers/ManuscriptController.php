@@ -41,7 +41,8 @@ class ManuscriptController extends Controller
             'abstract' => 'required|string|min:50|max:5000',
             'authors' => 'required|array|min:1',
             'keywords' => 'required|string|min:3|max:50',
-            'primary_file' => 'mimes:doc,docx',
+            'file' => 'required|file|mimes:doc,docx,pdf|max:215040',
+            'support_files.*.file' => 'nullable|file|mimes:doc,docx,pdf,jpg,jpeg,png,xlsx,xls|max:215040',
         ]);
 
         $this->manuscript->create([
@@ -80,6 +81,7 @@ class ManuscriptController extends Controller
             'abstract' => 'required|string|min:50|max:5000',
             'authors' => 'required|array|min:1',
             'keywords' => 'required|string|min:3|max:50',
+            'support_files.*.file' => 'nullable|file|mimes:doc,docx,pdf,jpg,jpeg,png,xlsx,xls|max:215040',
         ]);
 
         $user = Auth::user();

@@ -12,7 +12,7 @@ try {
         new PDO("pgsql:host=$host;port=$port;dbname=$name;sslmode=$ssl", getenv('DB_USERNAME') ?: '', getenv('DB_PASSWORD') ?: '', $opts);
     } else {
         if (getenv('MYSQL_ATTR_SSL_CA')) {
-            $opts[PDO::MYSQL_ATTR_SSL_CA] = getenv('MYSQL_ATTR_SSL_CA');
+            $opts[\Pdo\Mysql::ATTR_SSL_CA] = getenv('MYSQL_ATTR_SSL_CA');
         }
         new PDO("mysql:host=$host;port=$port;dbname=$name", getenv('DB_USERNAME') ?: '', getenv('DB_PASSWORD') ?: '', $opts);
     }

@@ -1,5 +1,24 @@
 <?php
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+
+function starts_with($value, $prefix) {
+    return Str::startsWith($value ?? '', $prefix);
+}
+
+function str_random($length = 16) {
+    return Str::random($length);
+}
+
+function str_slug($value, $separator = '-') {
+    return Str::slug($value, $separator);
+}
+
+function array_where($values, $callback) {
+    return Arr::where($values, $callback);
+}
+
 function setting($name) {
     return config('settings.'.$name);
 }

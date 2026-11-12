@@ -28,7 +28,7 @@
           </p>
           <p class="meta">Available online {{ \Carbon\Carbon::parse($article->created_at)->toFormattedDateString() }}</p>
           <p style="margin-top:16px">
-            <a class="btn btn-primary" href="https://jomaarducth.org/storage/app/public/{{ $article->file }}"><span class="material-icons">file_download</span> Download article</a>
+            <a class="btn btn-primary" href="{{ route('downloads.article', $article->slug) }}"><span class="material-icons">file_download</span> Download article</a>
           </p>
 
           <section style="margin-top:40px">

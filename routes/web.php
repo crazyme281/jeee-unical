@@ -10,13 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
-    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-}
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
+
+Route::get('/_local/runtime', function () {
+    abort_unless(app()->environment('local') && in_array(request()->ip(), ['127.0.0.1', '::1']), 404);
+    return response()->json([
+        'php' => PHP_VERSION,
+        'build' => PHP_BUILD_DATE,
+        'ini' => php_ini_loaded_file(),
+        'upload_progress' => ini_get('session.upload_progress.enabled'),
+        'project' => base_path(),
+    ]);
+});
 Route::get('/submission-guideline', 'HomeController@guideline')->name('guideline');
 
 Route::get('subscribe', 'HomeController@subscribe')->name('sub');
@@ -33,8 +41,8 @@ Route::get('/download/issues/{id}', 'DownloadController@issue')->name('downloads
 Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/search?keyword={keyword}', 'SearchController@keyword')->name('search.keyword');
 
-Route::resource('/issues', 'IssueController');
-Route::resource('/articles', 'ArticleController');
+Route::resource('/issues', 'IssueController')->only(['index', 'show']);
+Route::resource('/articles', 'ArticleController')->only(['index', 'show']);
 
 Route::post('api/subscribe', 'EmailSubscription@subscribe');
 
@@ -46,7 +54,7 @@ Route::get('/account', 'ProfileController@account')->name('account');
 Route::put('/account', 'ProfileController@updateAccount')->name('account.update');
 Route::get('/account/subscriptions', 'ProfileController@subscriptions')->name('subscriptions');
 
-Route::resource('/manuscripts', 'ManuscriptController');
+Route::resource('/manuscripts', 'ManuscriptController')->only(['index', 'create', 'store', 'edit', 'update']);
 
 //OAuth Routes
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');

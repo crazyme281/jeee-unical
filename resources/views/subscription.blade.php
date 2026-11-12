@@ -38,7 +38,7 @@ The prices of the books published by Bachudo Science Co. Ltd are as listed under
                     @auth
                     @if(Auth::user()->subscribedToCurrentVolume())
                         <p class="text-info">
-                            <h5>NOTE: You have an active subscription for the current volume ({{ $volumes->last()->year }}).</h5>
+                            <h5>NOTE: You have an active subscription for the current volume.</h5>
                         </p>
                         {{--<button class="btn btn-danger hide" type="button" id="cancel-button"> Cancel AutoSubscription </button>--}}
                     @endif
@@ -46,7 +46,13 @@ The prices of the books published by Bachudo Science Co. Ltd are as listed under
                     <p>
                         <a href="{{ route('subscriptions') }}">Click here</a> to view all your subscriptions.
                     </p>
+                    @if ($volumes->isEmpty())
+                        <p>No issues are available for subscription yet.</p>
+                    @elseif (!config('services.paystack.public'))
+                        <p>Online payments are not set up on this copy of the site.</p>
+                    @else
                     <form id="payment">
+                        @csrf
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group label-floating is-empty">
@@ -80,6 +86,7 @@ The prices of the books published by Bachudo Science Co. Ltd are as listed under
                             </div>
                         </div>
                     </form>
+                    @endif
                     @else
                         <a class="btn btn-secondary" href="{{ route('sub') }}">Login to Subscribe</a>
                     @endauth
@@ -125,7 +132,9 @@ The prices of the books published by Bachudo Science Co. Ltd are as listed under
     </section>
 @endsection
 @section('scripts')
+    @if (config('services.paystack.public'))
     <script src="https://js.paystack.co/v1/inline.js"></script>
+    @endif
     @auth
     <script>
         $('#cancel-button').click(function () {
@@ -156,7 +165,7 @@ The prices of the books published by Bachudo Science Co. Ltd are as listed under
             var amount = '{{ issue_price() }}';
             // If all Issues
             if(issue == 0){
-                if({{ Auth()->user()->corporate }} === 1){
+                if({{ (int) Auth()->user()->corporate }} === 1){
                     amount = '{{ volume_price_multi() }}';
                 }
                 else{
@@ -186,7 +195,8 @@ The prices of the books published by Bachudo Science Co. Ltd are as listed under
                     $.post('{{ route("sub") }}', {
                         reference: response.reference,
                         volume: volume,
-                        issue: issue
+                        issue: issue,
+                        _token: '{{ csrf_token() }}'
                     }).done(function (data) {
                         $this.text('subscribed');
                         success('Subscription successful!');

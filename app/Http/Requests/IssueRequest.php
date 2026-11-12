@@ -27,10 +27,11 @@ class IssueRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
         return [
             'number' => 'required|integer',
             'title' => 'required|max:250',
+            'volume' => 'required|integer|min:1',
             'year' => 'required|integer',
             'pages' => 'required',
             'status' => 'required|in:Current,Published',
-            'image' => 'required'
+            'image' => request()->hasFile('image') ? 'required|image|max:10240' : 'nullable|string'
         ];
     }
 

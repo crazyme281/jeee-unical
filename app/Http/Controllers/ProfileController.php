@@ -88,7 +88,7 @@ class ProfileController extends Controller
 
 
     public function subscriptions(){
-        $subscriptions = $user = Auth::user()->subscriptions()->get();
+        $subscriptions = Auth::user()->subscriptions()->latest()->get();
         return view('profile.subscriptions')->with(['subscriptions' => $subscriptions]);
 
     }

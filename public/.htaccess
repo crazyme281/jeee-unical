@@ -1,3 +1,8 @@
+# This file is not part of the site and must never be served or run.
+<Files "app.php">
+    Require all denied
+</Files>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews

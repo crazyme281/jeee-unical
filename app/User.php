@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPasswordNotification as ResetPasswordNotification;
@@ -53,17 +53,21 @@ class User extends Authenticatable
     }
 
     public function subscribedToCurrentVolume() {
-        $current_volume = Issue::get()->last();
-        $volume = $current_volume->volume;
-        $subscription = $this->subscriptions->where('volume', $volume)->where('issue', 0)->last();
-        return $subscription != null;
+        $current_issue = Issue::current()->first();
+        if (!$current_issue) {
+            return false;
+        }
+        $volume = $current_issue->volume;
+        return $this->subscriptions()->where('volume', $volume)->where('issue', 0)->exists();
     }
 
     public function subscribedToIssue($issue_id){
         $issue = Issue::find($issue_id);
+        if (!$issue) {
+            return false;
+        }
         // If subscribed to all the volume issues
-        $subscription = $this->subscriptions->where('volume', $issue->volume)->whereIn('issue', [0, $issue->number])->last();
-        return $subscription != null;
+        return $this->subscriptions()->where('volume', $issue->volume)->whereIn('issue', [0, $issue->number])->exists();
     }
 
     public function manuscripts() {
@@ -74,9 +78,13 @@ class User extends Authenticatable
         return !!$this->getAttribute('admin');
     }
 
+    public function getNameAttribute() {
+        return trim($this->first_name.' '.$this->last_name);
+    }
+
     public function setPasswordAttribute($value) {
         if($value)
-            $this->attributes['password'] = Hash::needsRehash($value) ? bcrypt($value) : $value;
+            $this->attributes['password'] = Hash::isHashed($value) ? $value : Hash::make($value);
     }
 
     /**

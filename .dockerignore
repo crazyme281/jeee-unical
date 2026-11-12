@@ -16,8 +16,8 @@
 **/.DS_Store
 
 # --- Regenerated inside the image ---
-vendor
-node_modules
+/vendor
+/node_modules
 bootstrap/cache/*.php
 public/storage
 public/hot
@@ -48,8 +48,20 @@ standard_index.html
 tests
 phpunit.xml
 *.zip
-RENDER_DEPLOYMENT.md
+*.sql
+*.sql.gz
+*.dump
+*.backup
+!database/schema/*.sql
+!database/sql/*.sql
 render.yaml
 Dockerfile
 .dockerignore
 public/uploads
+public/js/app.php
+euptron
+storage/local
+storage/basset
+scripts/*.ps1
+.phpunit.result.cache
+.phpunit.cache

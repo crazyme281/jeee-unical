@@ -2,18 +2,16 @@
 
 namespace App;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Article extends Model
 {
     use CrudTrait;
     use Sluggable;
     use SluggableScopeHelpers;
-    use SearchableTrait;
 
     protected $guarded = ['id'];
 
@@ -21,7 +19,7 @@ class Article extends Model
         return $this->belongsTo(Issue::class);
     }
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -48,6 +46,20 @@ class Article extends Model
 
     public function scopePopular($query) {
         return $query->orderBy('articles.views', 'desc');
+    }
+
+    public function scopeSearch($query, $term)
+    {
+        $term = '%'.trim($term).'%';
+
+        return $query->where(function ($query) use ($term) {
+            foreach (['title', 'authors', 'keywords', 'abstract'] as $column) {
+                $query->orWhere('articles.'.$column, 'like', $term);
+            }
+            $query->orWhereHas('issue', function ($issue) use ($term) {
+                $issue->where('title', 'like', $term);
+            });
+        });
     }
 
     public function setFileAttribute($value)

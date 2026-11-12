@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(resource_path('views/vendor/backpack/theme-tabler'), 'backpack.theme-tabler');
         //
         \Schema::defaultStringLength(191);
 

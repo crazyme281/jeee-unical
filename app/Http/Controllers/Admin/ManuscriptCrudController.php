@@ -9,8 +9,9 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\ManuscriptRequest as StoreRequest;
 use App\Http\Requests\ManuscriptRequest as UpdateRequest;
 
-class ManuscriptCrudController extends CrudController
+class ManuscriptCrudController extends JournalCrudController
 {
+    protected $requestClass = StoreRequest::class;
     public function setup()
     {
 
@@ -56,7 +57,11 @@ class ManuscriptCrudController extends CrudController
             [   // Enum
                 'name' => 'status',
                 'label' => 'Status',
-                'type' => 'enum'
+                'type' => 'enum',
+                'options' => array_combine(
+                    ['Draft', 'Submitted', 'Review', 'Approved', 'Rejected'],
+                    ['Draft', 'Submitted', 'Review', 'Approved', 'Rejected']
+                ),
             ],
             [   // Upload
                 'name' => 'file',
@@ -151,21 +156,4 @@ class ManuscriptCrudController extends CrudController
         // $this->crud->limit();
     }
 
-    public function store(StoreRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::storeCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
-
-    public function update(UpdateRequest $request)
-    {
-        // your additional operations before save here
-        $redirect_location = parent::updateCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
-    }
 }

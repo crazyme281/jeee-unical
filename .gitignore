@@ -1,35 +1,60 @@
-# Secrets
+# Local settings and private keys
 .env
 .env.*
 !.env.example
+*.key
+*.p12
+*.pfx
+*.pem
+auth.json
 
-# Dependencies / build output (rebuilt by Docker on Render)
+/euptron/
+
+# Installed packages. Keep composer.lock and public/vendor in Git.
 /vendor
 /node_modules
+/composer.phar
+/composer-setup.php
 
-# Laravel runtime data
+# Generated files
 /bootstrap/cache/*.php
 /public/storage
 /public/hot
+/storage/local/
+/storage/basset/
+/storage/app/tmp/
 /storage/logs/*
 !/storage/logs/.gitignore
 /storage/framework/cache/*
 /storage/framework/sessions/*
 /storage/framework/views/*
 /storage/framework/testing/*
-# Uploaded manuscripts / issue covers: keep OUT of Git (private data; lives on the Render disk)
+
+# Uploaded files
 /storage/app/public/*
 !/storage/app/public/.gitignore
 /storage/submissions
 /storage/issues
+/public/uploads
 
-# cPanel / OS / editor noise
+# Database backups and installers
+*.sql
+*.sql.gz
+*.dump
+*.backup
+!/database/schema/*.sql
+!/database/sql/*.sql
+*.zip
+*.7z
+
+# Editor and computer files
 error_log
 **/error_log
 .DS_Store
+Thumbs.db
+Desktop.ini
 .idea/
 .vscode/
-*.zip
-
-# Data that lives on the Render disk, not in Git
-/public/uploads
+/.phpunit.result.cache
+/.phpunit.cache/
+/public/js/app.php

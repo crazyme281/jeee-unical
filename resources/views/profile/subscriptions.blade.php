@@ -42,14 +42,15 @@
                 @if($subscriptions->count() > 0)
                     @foreach($subscriptions as $subscription)
                         <tr>
-                            <td class="text-center">1</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $subscription['volume'] }}</td>
                             <td>{{ $subscription['issue'] == 0 ? 'All' : $subscription['issue'] }}</td>
                             <td>{{ $subscription['amount'] }}</td>
                             <td>{{ $subscription['created_at'] }}</td>
+                        </tr>
                     @endforeach
                 @else
-                    <tr><td><h5>No records</h5></td></tr>
+                    <tr><td colspan="5"><h5>No records</h5></td></tr>
                 @endif
 
                 </tbody>

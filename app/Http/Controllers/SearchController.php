@@ -16,11 +16,10 @@ class SearchController extends Controller
 
     public function index(Request $request)
     {
-        $query = "";
-        foreach ($request->all() as $item){
-            if($item)
-                $query .= " {$item}";
-        }
+        $query = trim(implode(' ', array_filter(
+            $request->only(['keyword', 'author', 'issue']),
+            fn ($value) => is_string($value) && $value !== ''
+        )));
 
         if(empty($query)){
             return redirect()->route('home');
