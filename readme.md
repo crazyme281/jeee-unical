@@ -58,10 +58,12 @@ $Xampp = 'C:\xampp'
 $PhpFolder = 'C:\xampp\php-8.5.12-1'
 $Php = Join-Path $PhpFolder 'php.exe'
 $Composer = Join-Path $Xampp 'composer\composer.phar'
-$Project = 'C:\Users\euptron\Desktop\jeee-unical'
+$Project = 'C:\path\to\jeee-unical'
 $Apache = Join-Path $Xampp 'apache\bin\httpd.exe'
 $Mysql = Join-Path $Xampp 'mysql\bin\mysql.exe'
 ```
+
+`$Project` must be the folder that contains `artisan`. Replace `C:\path\to\jeee-unical` with your real path, for example `C:\Users\YourName\Desktop\jeee-unical`. To use the folder you are already in, run `$Project = (Get-Location).Path` instead.
 
 Check the selected PHP, not the old PHP that another program may have installed.
 
@@ -73,49 +75,68 @@ For the version used here, the output must show PHP 8.5.12, a build date of Octo
 
 ### 3. Set up php.ini
 
-Create `$PhpFolder\php.ini` if it does not exist. Open it in a text editor and use these settings. Replace `C:/xampp` paths if your folders differ. If editing an existing file, change the existing entries rather than adding conflicting duplicates.
+The PHP zip does not contain `php.ini`. It only has `php.ini-development` and `php.ini-production`. Without `php.ini`, PHP loads no extensions, and Composer stops with "The openssl extension is required". Create `php.ini` from the template and turn on the extensions.
 
-```ini
-extension_dir="C:/xampp/php-8.5.12-1/ext"
-extension=curl
-extension=exif
-extension=fileinfo
-extension=gd
-extension=intl
-extension=mbstring
-extension=mysqli
-extension=openssl
-extension=pdo_mysql
-extension=pdo_pgsql
-extension=pdo_sqlite
-extension=zip
+```powershell
+$Ini = Join-Path $PhpFolder 'php.ini'
+if (-not (Test-Path $Ini)) { Copy-Item "$PhpFolder\php.ini-development" $Ini }
+$phpDir = $PhpFolder.Replace('\', '/')
+$xamppDir = $Xampp.Replace('\', '/')
+$c = Get-Content $Ini -Raw
+$c = $c -replace ';\s*extension_dir\s*=\s*"ext"', "extension_dir=`"$phpDir/ext`""
+foreach ($e in 'curl','exif','fileinfo','gd','intl','mbstring','mysqli','openssl','pdo_mysql','pdo_pgsql','pdo_sqlite','zip') {
+    $c = $c -replace "(?m)^;\s*extension=$e\s*$", "extension=$e"
+}
+Set-Content $Ini $c -Encoding ASCII
+```
+
+Remove repeated `extension=` lines. A repeated line causes a "Module is already loaded" warning.
+
+```powershell
+$seen = @{}
+$out = foreach ($l in (Get-Content $Ini)) {
+    if ($l -match '^extension=(\w+)\s*$') {
+        if ($seen[$Matches[1]]) { continue }
+        $seen[$Matches[1]] = $true
+    }
+    $l
+}
+Set-Content $Ini $out -Encoding ASCII
+```
+
+Add the project settings and create the session folder.
+
+```powershell
+Add-Content $Ini @"
+
 memory_limit=512M
 max_execution_time=120
 post_max_size=230M
 upload_max_filesize=210M
 date.timezone=Africa/Lagos
-display_errors=Off
 log_errors=On
 error_reporting=E_ALL
-session.save_path="C:/xampp/tmp"
+session.save_path="$xamppDir/tmp"
 session.upload_progress.enabled=0
 opcache.enable=0
 opcache.enable_cli=0
-curl.cainfo="C:/xampp/apache/bin/curl-ca-bundle.crt"
-openssl.cafile="C:/xampp/apache/bin/curl-ca-bundle.crt"
+curl.cainfo="$xamppDir/apache/bin/curl-ca-bundle.crt"
+openssl.cafile="$xamppDir/apache/bin/curl-ca-bundle.crt"
+"@
+New-Item -ItemType Directory -Path "$Xampp\tmp" -Force
 ```
 
-Upload progress must stay off. OPcache is disabled locally because it caused a Windows startup error when running two copies. The online PHP settings are in `docker/php/zz-laravel.ini` and enable OPcache.
+Later lines override earlier ones in `php.ini`, so these values replace the template's. Upload progress must stay off. OPcache is disabled locally because it caused a Windows startup error when running two copies. The online PHP settings are in `docker/php/zz-laravel.ini` and enable OPcache.
 
 Verify the settings and loaded PHP features.
 
 ```powershell
-& $Php -c "$PhpFolder\php.ini" --ini
-& $Php -c "$PhpFolder\php.ini" -m
-& $Php -c "$PhpFolder\php.ini" --ri session
+& $Php -c $Ini --ini
+& $Php -c $Ini -d display_errors=1 -d display_startup_errors=1 -m
+& $Php -c $Ini --ri session
 ```
 
-The loaded file must be the one you edited. The last command must show `session.upload_progress.enabled => Off`.
+`Loaded Configuration File` must show your `php.ini`. If it shows `(none)`, the file was not created. The module list must include `openssl`, `curl`, `mbstring`, `pdo_mysql`, `gd` and `zip`. If a "Unable to load dynamic library" message appears, `extension_dir` is wrong. The last command must show `session.upload_progress.enabled => Off`. Do not go to the next step until all of this is correct.
 
 ### 4. Install Composer
 
@@ -129,6 +150,8 @@ $Expected = 'dd158c0afd41d15fac89e1b4e47b5d42911fe316c3687cd5edac98319b25d028'
 if ((Get-FileHash $Composer -Algorithm SHA256).Hash -ne $Expected) { throw 'Composer download check failed' }
 & $Php -c "$PhpFolder\php.ini" $Composer --version
 ```
+
+Composer needs the `openssl` extension. If `& $Php -c "$PhpFolder\php.ini" -m` does not list `openssl`, go back to step 3.
 
 If a download or installation fails, stop at that step. Do not use winget or bypass a failed file check.
 
@@ -166,21 +189,45 @@ $DbPassword = -join ($Bytes | ForEach-Object { $_.ToString('x2') })
 $DbPassword
 ```
 
-Save that value. These commands create `jetsi_local` and give its user access only to that database. `-p` asks for the MySQL administrator password. Press Enter if your new XAMPP installation has no administrator password.
+Save that value. These commands create `jetsi_local` and give its user access only to that database. They connect as `root` without a password, which is the default on a new XAMPP. If you set a root password, add `-p` to each command.
 
 ```powershell
-& $Mysql -h 127.0.0.1 -P 3306 -u root -p --execute="CREATE DATABASE IF NOT EXISTS jetsi_local CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
-& $Mysql -h 127.0.0.1 -P 3306 -u root -p --execute="CREATE USER IF NOT EXISTS 'jetsi_local'@'localhost' IDENTIFIED BY '$DbPassword'"
-& $Mysql -h 127.0.0.1 -P 3306 -u root -p --execute="CREATE USER IF NOT EXISTS 'jetsi_local'@'127.0.0.1' IDENTIFIED BY '$DbPassword'"
-& $Mysql -h 127.0.0.1 -P 3306 -u root -p --execute="GRANT ALL PRIVILEGES ON jetsi_local.* TO 'jetsi_local'@'localhost'"
-& $Mysql -h 127.0.0.1 -P 3306 -u root -p --execute="GRANT ALL PRIVILEGES ON jetsi_local.* TO 'jetsi_local'@'127.0.0.1'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="CREATE DATABASE IF NOT EXISTS jetsi_local CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="CREATE USER IF NOT EXISTS 'jetsi_local'@'localhost' IDENTIFIED BY '$DbPassword'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="CREATE USER IF NOT EXISTS 'jetsi_local'@'127.0.0.1' IDENTIFIED BY '$DbPassword'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="GRANT ALL PRIVILEGES ON jetsi_local.* TO 'jetsi_local'@'localhost'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="GRANT ALL PRIVILEGES ON jetsi_local.* TO 'jetsi_local'@'127.0.0.1'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="ALTER USER 'jetsi_local'@'localhost' IDENTIFIED BY '$DbPassword'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="ALTER USER 'jetsi_local'@'127.0.0.1' IDENTIFIED BY '$DbPassword'"
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="FLUSH PRIVILEGES"
 ```
 
-If this database user already exists, use its existing password. The commands do not change it. For an independent copy, use a different database name and username throughout these commands and `.env`.
+Confirm the above works:
+```powershell
+& $Mysql -h 127.0.0.1 -P 3306 -u root --execute="SHOW DATABASES; SELECT user,host FROM mysql.user WHERE user='jetsi_local';"
+```
+
+`CREATE USER IF NOT EXISTS` does not change the password of a user that already exists. The `ALTER USER` lines set the password in every case, so MySQL always has the password in `$DbPassword`. Test the login before going on.
+
+```powershell
+& $Mysql -h 127.0.0.1 -P 3306 -u jetsi_local "-p$DbPassword" --execute="SELECT 1"
+```
+
+It must print a small table with `1`. If it says access denied, run the commands above again in the same PowerShell window.
+
+For an independent copy, use a different database name and username throughout these commands and `.env`.
 
 ### 3. Fill in .env
 
-Open `.env` and set these values. Replace the password placeholder with the generated or existing password. Leave the other entries from `.env.example` in place.
+Open `.env` and set these values. Replace the password placeholder with the password from the database step. Leave the other entries from `.env.example` in place.
+
+To write that password into `.env` without editing it by hand, run this in the same PowerShell window and project folder used for the database step.
+
+```powershell
+(Get-Content .env) -replace '^DB_PASSWORD=.*', "DB_PASSWORD=$DbPassword" | Set-Content .env -Encoding ASCII
+```
+
+The other values below still need to be set in `.env`.
 
 ```dotenv
 APP_NAME=JETSI_APP
@@ -248,6 +295,13 @@ The following Apache settings belong only to this project. They select the corre
 ### 1. Write the project server settings
 
 In the PowerShell window where you set the paths, run this block. It writes `storage/local/apache-manual.conf`. The paths are filled in from your variables.
+
+In the current dir run:
+```powershell
+$Project = (Get-Location).Path
+New-Item -ItemType Directory -Path "$Project\storage\local" -Force
+```
+then do this:
 
 ```powershell
 $ApacheRoot = (Join-Path $Xampp 'apache').Replace('\', '/')
@@ -572,9 +626,14 @@ Check [Backpack's license terms](https://backpackforlaravel.com/license) before 
 | --- | --- |
 | PHP starts with a missing DLL message | Install the x64 Windows runtime and use the x64 Thread Safe PHP build |
 | Composer says PHP is too old | Run it through `$Php`, not the computer's default `php` |
+| Composer says the openssl extension is required | `php.ini` is missing or does not load openssl. Redo step 3 and check `-m` |
+| `Loaded Configuration File: (none)` | `$PhpFolder\php.ini` does not exist. The zip does not include it |
+| `Module "mysqli" is already loaded` | A repeated `extension=` line in `php.ini`. Run the duplicate-removal block in step 3 |
 | A PHP feature is missing | Enable it in the selected `php.ini`, then restart Apache |
+| `Could not find a part of the path` for `storage\local\apache-manual.conf` | `$Project` points to a folder that does not exist. Set it to the folder that contains `artisan`, then run the block again |
 | Port 8080 is already in use | Stop only your own server or use another local port |
 | Database connection fails | Check MySQL is running and `.env` matches the database name, user, and password |
+| `Access denied for user 'jetsi_local'` | The password in `.env` is not the one MySQL has. Run the `ALTER USER` commands in the database step, write the same password to `.env`, then run `artisan config:clear` |
 | Changing `.env` has no effect | Run `artisan config:clear` locally, or redeploy online |
 | An upload link is broken | Check `public/storage` points to this copy's `storage/app/public` |
 | Admin access is denied | Register first, then run `artisan journal:admin` with that email |
